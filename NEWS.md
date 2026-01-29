@@ -1,3 +1,4 @@
-# agrillm (development version)
+# agrillm 0.0.1
 
-* Initial CRAN submission.
+* Initial package development
+* Added package infrastructure and documentation

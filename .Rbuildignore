@@ -1,2 +1,6 @@
 ^agrillm\.Rproj$
 ^\.Rproj\.user$
+^README\.Rmd$
+^\.vscode/
+^NEWS.md$
+^.github/
