@@ -1,10 +1,10 @@
 # Variable, global to package's namespace.
 # This function is not exported to user space and does not need to be documented.
 AGRILLM_OPTIONS <- settings::options_manager(
-    chatgpt = list(
-        apikey = ""
+    openai = list(
+        apikey = Sys.getenv("OPENAI_API_KEY", "")
     ),
-    default = "chatgpt"
+    default = "openai"
 )
 
 
@@ -21,7 +21,7 @@ AGRILLM_OPTIONS <- settings::options_manager(
 #'
 #' @section Supported options:
 #' \describe{
-#'   \item{\code{chatgpt.apikey}}{ API key for ChatGPT integration. }
+#'   \item{\code{openai.apikey}}{ API key for OpenAI integration. }
 #' }
 #'
 #' @return If called with no arguments, returns all current options.
@@ -32,7 +32,7 @@ AGRILLM_OPTIONS <- settings::options_manager(
 #' agrillm_options()
 #'
 #' # Set apikey
-#' agrillm_options(chatgpt.apikey = "your_api_key_here")
+#' agrillm_options(openai.apikey = "your_api_key_here")
 #'
 #' @export
 agrillm_options <- function(...) {
@@ -57,8 +57,8 @@ agrillm_options <- function(...) {
             group <- parts[1]
             subkey <- parts[2]
 
-            if (!group %in% c("chatgpt")) {
-                stop(sprintf("Unknown group: '%s' (must be 'chatgpt')", group), call. = FALSE)
+            if (!group %in% c("openai")) {
+                stop(sprintf("Unknown group: '%s' (must be 'openai')", group), call. = FALSE)
             }
 
             # Get current value to check type
@@ -102,7 +102,7 @@ agrillm_options <- function(...) {
 #'
 #' @return Invisibly returns the default settings after reset.
 #' @examples
-#' agrillm_options(chatgpt.apikey = "your_api_key_here")
+#' agrillm_options(openai.apikey = "your_api_key_here")
 #' agrillm_reset()
 #' agrillm_options()
 #' @export
@@ -123,7 +123,7 @@ agrillm_reset <- function() {
 #'
 #' @examples
 #' # Get the default apikey
-#' get_agrillm_option("chatgpt.apikey")
+#' get_agrillm_option("openai.apikey")
 #'
 #' @export
 get_agrillm_option <- function(name) {

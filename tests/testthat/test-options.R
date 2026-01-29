@@ -1,19 +1,19 @@
 test_that("agrillm_options returns all options when called with no arguments", {
     opts <- agrillm_options()
     expect_type(opts, "list")
-    expect_true("chatgpt" %in% names(opts))
+    expect_true("openai" %in% names(opts))
     expect_true("default" %in% names(opts))
 })
 
-test_that("agrillm_options sets and retrieves chatgpt.apikey", {
+test_that("agrillm_options sets and retrieves openai.apikey", {
     # Reset to ensure clean state
     agrillm_reset()
 
     # Set API key
-    agrillm_options(chatgpt.apikey = "test_key_123")
+    agrillm_options(openai.apikey = "test_key_123")
 
     # Verify it was set
-    key <- get_agrillm_option("chatgpt.apikey")
+    key <- get_agrillm_option("openai.apikey")
     expect_equal(key, "test_key_123")
 
     # Clean up
@@ -25,12 +25,11 @@ test_that("agrillm_options sets and retrieves default option", {
     agrillm_reset()
 
     # Set default
-    agrillm_options(default = "chatgpt")
+    agrillm_options(default = "openai")
 
     # Verify it was set
     default <- get_agrillm_option("default")
-    expect_equal(default, "chatgpt")
-
+    expect_equal(default, "openai")
     # Clean up
     agrillm_reset()
 })
@@ -52,7 +51,7 @@ test_that("agrillm_options throws error for invalid option name format", {
 test_that("agrillm_options throws error for unknown group", {
     expect_error(
         agrillm_options(unknown.option = "value"),
-        "Unknown group.*must be 'chatgpt'"
+        "Unknown group.*must be 'openai'"
     )
 })
 
@@ -65,22 +64,22 @@ test_that("agrillm_options throws error for unknown top-level option", {
 
 test_that("agrillm_reset restores default values", {
     # Set a custom value
-    agrillm_options(chatgpt.apikey = "custom_key")
-    expect_equal(get_agrillm_option("chatgpt.apikey"), "custom_key")
+    agrillm_options(openai.apikey = "custom_key")
+    expect_equal(get_agrillm_option("openai.apikey"), "custom_key")
 
     # Reset
     agrillm_reset()
 
     # Verify reset to default
-    key <- get_agrillm_option("chatgpt.apikey")
+    key <- get_agrillm_option("openai.apikey")
     expect_equal(key, "")
 })
 
 test_that("get_agrillm_option retrieves nested options", {
     agrillm_reset()
-    agrillm_options(chatgpt.apikey = "test_key")
+    agrillm_options(openai.apikey = "test_key")
 
-    value <- get_agrillm_option("chatgpt.apikey")
+    value <- get_agrillm_option("openai.apikey")
     expect_equal(value, "test_key")
 
     agrillm_reset()
@@ -90,7 +89,7 @@ test_that("get_agrillm_option retrieves top-level options", {
     agrillm_reset()
 
     value <- get_agrillm_option("default")
-    expect_equal(value, "chatgpt")
+    expect_equal(value, "openai")
 
     agrillm_reset()
 })
@@ -118,7 +117,7 @@ test_that(".check_option_value enforces length checking", {
 })
 
 test_that("agrillm_options returns invisibly when setting options", {
-    result <- withVisible(agrillm_options(chatgpt.apikey = "test"))
+    result <- withVisible(agrillm_options(openai.apikey = "test"))
     expect_false(result$visible)
     expect_type(result$value, "list")
 
