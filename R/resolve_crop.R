@@ -10,12 +10,12 @@
 #' @examples
 #' resolve_crop("wheat")
 #' resolve_crop("Winter Wheat")
-#' resolve_crop("unknown crop", use_ai = FALSE) # should error
+#' # resolve_crop("unknown crop", use_ai = FALSE) # should error
 #' 
 #' # With AI fallback (if configured)
 #' # resolve_crop("unknown crop", use_ai = TRUE)
 #' 
- #' @export
+#' @export
 resolve_crop <- function(crop_input, use_ai = TRUE) {
     stopifnot(is.character(crop_input), length(crop_input) == 1)
     raw <- tolower(trimws(crop_input))

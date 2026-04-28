@@ -21,7 +21,7 @@ using exact/synonym matching, heuristics, and optionally an LLM (AI) fallback.
 \examples{
 resolve_crop("wheat")
 resolve_crop("Winter Wheat")
-resolve_crop("unknown crop", use_ai = FALSE) # should error
+# resolve_crop("unknown crop", use_ai = FALSE) # should error
 
 # With AI fallback (if configured)
 # resolve_crop("unknown crop", use_ai = TRUE)
