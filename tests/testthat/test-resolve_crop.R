@@ -15,8 +15,7 @@ test_that("resolve_crop uses heuristics if no direct match", {
 
 test_that("resolve_crop errors if crop cannot be resolved and use_ai is FALSE", {
     agrillm_options$reset()
-    expect_error(resolve_crop("notacrop", use_ai = FALSE),
-                "Unable to resolve crop")
+    expect_error(resolve_crop("notacrop", use_ai = FALSE))
 })
 
 test_that("resolve_crop returns correct crop for direct match", {

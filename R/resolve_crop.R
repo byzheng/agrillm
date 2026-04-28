@@ -59,11 +59,11 @@ resolve_crop <- function(crop_input, use_ai = TRUE) {
 
 }
 
- #' Internal: Use LLM to resolve crop
- #'
- #' @param raw_input Character. The user input.
- #' @param candidate_crops Character vector. Supported crops.
- #' @return The best matching crop or "unknown".
+#' Internal: Use LLM to resolve crop
+#'
+#' @param raw_input Character. The user input.
+#' @param candidate_crops Character vector. Supported crops.
+#' @return The best matching crop or "unknown".
 .resolve_crop_with_ai <- function(raw_input, candidate_crops) {
     stopifnot(is.character(raw_input), length(raw_input) == 1)
     stopifnot(is.character(candidate_crops), length(candidate_crops) > 0)

@@ -5,7 +5,7 @@ test_that("agrillm_options$get('llm') returns correct defaults", {
     expect_equal(llm$provider, "azure")
     expect_true("azure" %in% names(llm))
     expect_equal(llm$azure$api_version, "2024-12-01-preview")
-    expect_equal(llm$azure$resource_name, "af-systems-ei-kik006-agent")
+    expect_equal(llm$azure$resource_name, "af-systems-ei-zhe00a-agent")
     expect_equal(llm$azure$deployment_name, "gpt-5.2")
 })
 
@@ -37,7 +37,7 @@ test_that("agrillm_options$reset restores default llm", {
     agrillm_options$reset()
     llm <- agrillm_options$get("llm")
     expect_equal(llm$azure$api_version, "2024-12-01-preview")
-    expect_equal(llm$azure$resource_name, "af-systems-ei-kik006-agent")
+    expect_equal(llm$azure$resource_name, "af-systems-ei-zhe00a-agent")
     expect_equal(llm$azure$deployment_name, "gpt-5.2")
 })
 
