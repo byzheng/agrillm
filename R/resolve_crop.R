@@ -1,4 +1,21 @@
 
+#' Resolve a crop name to a supported crop
+#'
+#' This function attempts to map a user-provided crop name or synonym to a supported crop name
+#' using exact/synonym matching, heuristics, and optionally an LLM (AI) fallback.
+#'
+#' @param crop_input Character string. The crop name or description to resolve.
+#' @param use_ai Logical. Whether to use AI fallback if no match is found. Default: TRUE.
+#' @return A list with elements: crop (resolved crop name), source ("direct_match", "heuristic", or "ai_resolution"), raw_input (original input).
+#' @examples
+#' resolve_crop("wheat")
+#' resolve_crop("Winter Wheat")
+#' resolve_crop("unknown crop", use_ai = FALSE) # should error
+#' 
+#' # With AI fallback (if configured)
+#' # resolve_crop("unknown crop", use_ai = TRUE)
+#' 
+ #' @export
 resolve_crop <- function(crop_input, use_ai = TRUE) {
     stopifnot(is.character(crop_input), length(crop_input) == 1)
     raw <- tolower(trimws(crop_input))
@@ -42,6 +59,11 @@ resolve_crop <- function(crop_input, use_ai = TRUE) {
 
 }
 
+ #' Internal: Use LLM to resolve crop
+ #'
+ #' @param raw_input Character. The user input.
+ #' @param candidate_crops Character vector. Supported crops.
+ #' @return The best matching crop or "unknown".
 .resolve_crop_with_ai <- function(raw_input, candidate_crops) {
     stopifnot(is.character(raw_input), length(raw_input) == 1)
     stopifnot(is.character(candidate_crops), length(candidate_crops) > 0)
