@@ -50,9 +50,9 @@ Interpretation rules (use common Australian grain-farming conventions):
 
 A general rule for a period time:
 
-- "early <month>" → days 01–10, shift as "mid"
-- "mid <month>" → days 11–20, shift as "mid"
-- "late <month>" → days 21–end, shift as "mid"
+- "early <month>" to days 01-10, shift as "mid"
+- "mid <month>" to days 11-20, shift as "mid"
+- "late <month>" to days 21-end, shift as "mid"
 
 Before a specifc day can be indicated with "before <day> <month>"
 
@@ -65,9 +65,6 @@ After a specifc day can be indicated with "after <day> <month>"
 - which should set the shift to "after" respectively
 - "start" as the specified day
 - "end" as 10 days after the specified day
-
-
-
 
 Constraints:
 

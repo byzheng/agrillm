@@ -14,7 +14,8 @@ BugReports: https://github.com/byzheng/agrillm/issues
 Depends: R (>= 4.1.0)
 Imports:
     optree,
-    tidyllm
+    tidyllm,
+    jsonlite
 Remotes: 
     byzheng/rapsimng,
     irudnyts/openai
