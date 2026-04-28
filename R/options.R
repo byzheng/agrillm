@@ -34,10 +34,10 @@ llm_validator <- function(value) {
             stop("Azure configuration is missing fields: ", paste(missing_fields, collapse = ", "))
         }
         if (Sys.getenv("AZURE_OPENAI_API_KEY") == "") {
-            stop("AZURE_OPENAI_API_KEY environment variable is not set. Azure LLM calls will fail.")
+            warning("AZURE_OPENAI_API_KEY environment variable is not set. Azure LLM calls will fail.")
         }
         if (Sys.getenv("AZURE_ENDPOINT_URL") == "") {
-            stop("AZURE_ENDPOINT_URL environment variable is not set. Azure LLM calls will fail.")
+            warning("AZURE_ENDPOINT_URL environment variable is not set. Azure LLM calls will fail.")
         }
     }
 }
