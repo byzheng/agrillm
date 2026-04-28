@@ -13,7 +13,8 @@ URL: https://github.com/byzheng/agrillm
 BugReports: https://github.com/byzheng/agrillm/issues
 Depends: R (>= 4.1.0)
 Imports:
-    optree
+    optree,
+    tidyllm
 Remotes: 
     byzheng/rapsimng,
     irudnyts/openai

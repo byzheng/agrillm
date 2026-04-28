@@ -42,3 +42,26 @@ resolve_crop <- function(crop_input, use_ai = TRUE) {
 
 }
 
+.resolve_crop_with_ai <- function(raw_input, candidate_crops) {
+    prompt <- sprintf("
+You are mapping a farmer free text crop description to a supported crop
+for an agricultural simulation system.
+
+Supported crops:
+- wheat
+- barley
+- canola
+
+Farmer input: %s
+
+Task:
+Return the single best matching crop from the supported list.
+If none clearly match, return \"unknown\".
+
+Rules:
+- Do not invent new crops
+- Do not explain
+- Return only one word from the list or \"unknown\"
+    
+    ")
+}
