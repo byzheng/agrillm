@@ -4,7 +4,13 @@ crops_validator <- function(value) {
         stop("crops must be a list")
     }
     for (i in seq(along = value)) {
-        optree::v_character_scalar()
+        v_crop <- value[[i]]
+        if (!is.vector(v_crop)) {
+            stop("crops.", names(value)[i], " must be a vector")
+        }
+        if (!is.character(v_crop)) {
+            stop("crops.", names(value)[i], " must be a character vector")
+        }
     }
 }
 
@@ -21,7 +27,7 @@ llm_validator <- function(value) {
     if (!is.list(value[[value$provider]])) {
         stop("llm provider configuration must be a list")
     }
-    if (provider == "azure") {
+    if (value$provider == "azure") {
         required_fields <- c("api_version", "resource_name", "deployment_name")
         missing_fields <- setdiff(required_fields, names(value$azure))
         if (length(missing_fields) > 0) {
@@ -54,6 +60,7 @@ llm_validator <- function(value) {
 #' }
 #'
 #' @export
+#' @importFrom optree create_options_manager
 #' @examples
 #' # Get default crops
 #' agrillm_options$get("crops")
@@ -71,11 +78,6 @@ agrillm_options <- optree::create_options_manager(
     defaults = list(
         llm = list(
             provider = "azure",
-            azure = list(
-                api_version  = "2024-12-01-preview",
-                resource_name = "af-systems-ei-kik006-agent",
-                deployment_name = "gpt-5.2"
-            )
             azure = list(
                 api_version  = "2024-12-01-preview",
                 resource_name = "af-systems-ei-kik006-agent",
