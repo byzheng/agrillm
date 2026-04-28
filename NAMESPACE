@@ -2,4 +2,5 @@
 
 export(agrillm_options)
 export(azure_chat)
+export(llm_chat)
 importFrom(optree,create_options_manager)

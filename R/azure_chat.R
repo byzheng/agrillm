@@ -1,6 +1,7 @@
 .azure_chat <- function(message, deployment, api_version, ...) {
+    msg <- tidyllm::llm_message(message)
     tidyllm::azure_openai_chat(
-        message,
+        msg,
         .deployment = deployment,
         .api_version = api_version,
         ...

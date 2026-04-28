@@ -30,15 +30,15 @@ resolve_crop <- function(crop_input, use_ai = TRUE) {
     if (!use_ai) {
         stop("Unable to resolve crop: ", crop_input)
     }
-    stop("AI-based resolution is not implemented yet. Unable to resolve crop: ", crop_input)
-    # ai_crop <- resolve_crop_with_ai(raw, names(SUPPORTED_CROPS))
-    # return(
-    #     list(
-    #         crop = ai_crop,
-    #         source = "ai_resolution",
-    #         raw_input = crop_input
-    #         )
-    # )
+    message("No direct match for crop '", crop_input, "'. Using AI to attempt resolution...")
+    ai_crop <- .resolve_crop_with_ai(raw, names(SUPPORTED_CROPS))
+    return(
+        list(
+            crop = ai_crop,
+            source = "ai_resolution",
+            raw_input = crop_input
+        )
+    )
 
 }
 
@@ -47,10 +47,7 @@ resolve_crop <- function(crop_input, use_ai = TRUE) {
 You are mapping a farmer free text crop description to a supported crop
 for an agricultural simulation system.
 
-Supported crops:
-- wheat
-- barley
-- canola
+Supported crops: %s
 
 Farmer input: %s
 
@@ -63,5 +60,15 @@ Rules:
 - Do not explain
 - Return only one word from the list or \"unknown\"
     
-    ")
+", 
+    paste(candidate_crops, collapse = ","),
+    raw_input
+    )
+    response <- llm_chat(prompt)
+    response <- tolower(trimws(response))
+    if (response %in% candidate_crops) {
+        return(response)
+    } else {
+        return("unknown")
+    }
 }

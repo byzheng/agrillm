@@ -80,7 +80,7 @@ agrillm_options <- optree::create_options_manager(
             provider = "azure",
             azure = list(
                 api_version  = "2024-12-01-preview",
-                resource_name = "af-systems-ei-kik006-agent",
+                resource_name = "af-systems-ei-zhe00a-agent",
                 deployment_name = "gpt-5.2"
             )
         ),
