@@ -48,9 +48,26 @@ Return a JSON object with the following fields:
 
 Interpretation rules (use common Australian grain-farming conventions):
 
-- "early <month>" → days 01–10, shift = "before"
-- "mid <month>" → days 11–20, shift = "mid"
-- "late <month>" → days 21–end, shift = "after"
+A general rule for a period time:
+
+- "early <month>" → days 01–10, shift as "mid"
+- "mid <month>" → days 11–20, shift as "mid"
+- "late <month>" → days 21–end, shift as "mid"
+
+Before a specifc day can be indicated with "before <day> <month>"
+
+-  which should set the shift to "before" respectively
+- "end" as the specified day
+- "start" as 10 days before the specified day
+
+After a specifc day can be indicated with "after <day> <month>"
+
+- which should set the shift to "after" respectively
+- "start" as the specified day
+- "end" as 10 days after the specified day
+
+
+
 
 Constraints:
 
