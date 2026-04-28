@@ -43,6 +43,9 @@ resolve_crop <- function(crop_input, use_ai = TRUE) {
 }
 
 .resolve_crop_with_ai <- function(raw_input, candidate_crops) {
+    stopifnot(is.character(raw_input), length(raw_input) == 1)
+    stopifnot(is.character(candidate_crops), length(candidate_crops) > 0)
+    
     prompt <- sprintf("
 You are mapping a farmer free text crop description to a supported crop
 for an agricultural simulation system.
@@ -65,9 +68,10 @@ Rules:
     raw_input
     )
     response <- llm_chat(prompt)
-    response <- tolower(trimws(response))
-    if (response %in% candidate_crops) {
-        return(response)
+    reply <- tidyllm::get_reply(response)  
+    reply <- tolower(trimws(reply))
+    if (reply %in% candidate_crops) {
+        return(reply)
     } else {
         return("unknown")
     }
