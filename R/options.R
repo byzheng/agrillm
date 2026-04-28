@@ -8,6 +8,34 @@ crops_validator <- function(value) {
     }
 }
 
+llm_validator <- function(value) {
+    if (!is.list(value)) {
+        stop("llm must be a list")
+    }
+    if (is.null(value$provider)) {
+        stop("llm must have a provider field")
+    }
+    if (!value$provider %in% names(value)) {
+        stop("llm provider must have a corresponding configuration list")
+    }
+    if (!is.list(value[[value$provider]])) {
+        stop("llm provider configuration must be a list")
+    }
+    if (provider == "azure") {
+        required_fields <- c("api_version", "resource_name", "deployment_name")
+        missing_fields <- setdiff(required_fields, names(value$azure))
+        if (length(missing_fields) > 0) {
+            stop("Azure configuration is missing fields: ", paste(missing_fields, collapse = ", "))
+        }
+        if (Sys.getenv("AZURE_OPENAI_API_KEY") == "") {
+            stop("AZURE_OPENAI_API_KEY environment variable is not set. Azure LLM calls will fail.")
+        }
+        if (Sys.getenv("AZURE_ENDPOINT_URL") == "") {
+            stop("AZURE_ENDPOINT_URL environment variable is not set. Azure LLM calls will fail.")
+        }
+    }
+}
+
 #' agrillm options
 #'
 #' An options manager for configuring agrillm parameters. This object provides
@@ -41,6 +69,19 @@ crops_validator <- function(value) {
 #' agrillm_options$reset()
 agrillm_options <- optree::create_options_manager(
     defaults = list(
+        llm = list(
+            provider = "azure",
+            azure = list(
+                api_version  = "2024-12-01-preview",
+                resource_name = "af-systems-ei-kik006-agent",
+                deployment_name = "gpt-5.2"
+            )
+            azure = list(
+                api_version  = "2024-12-01-preview",
+                resource_name = "af-systems-ei-kik006-agent",
+                deployment_name = "gpt-5.2"
+            )
+        ),
         crops = list(
             wheat   = c("wheat", "bread wheat", "spring wheat", "winter wheat"),
             barley  = c("barley", "feed barley", "malting barley"),
@@ -48,6 +89,7 @@ agrillm_options <- optree::create_options_manager(
         )
     ),
     validators = list(
-        "crops" = crops_validator
+        "crops" = crops_validator,
+        "llm" = llm_validator
     )
 )
