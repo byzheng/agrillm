@@ -1,5 +1,5 @@
 
-[![R-CMD-check.yaml](https://github.com/byzheng/agrillm/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/byzheng/agrillm/actions/workflows/R-CMD-check.yaml)[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/agrillm)](https://cran.r-project.org/package=agrillm)
+[![R-CMD-check.yaml](https://github.com/byzheng/agrillm/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/byzheng/agrillm/actions/workflows/R-CMD-check.yaml)
 
 [![](http://cranlogs.r-pkg.org/badges/grand-total/agrillm?color=green)](https://cran.r-project.org/package=agrillm)
 [![](http://cranlogs.r-pkg.org/badges/last-month/agrillm?color=green)](https://cran.r-project.org/package=agrillm)
