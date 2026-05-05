@@ -9,7 +9,6 @@ resolve_location(
   latitude = NULL,
   longitude = NULL,
   use_ai = TRUE,
-  require_coords = TRUE,
   use_cache = TRUE
 )
 }
@@ -20,9 +19,7 @@ resolve_location(
 
 \item{longitude}{Numeric. Longitude if already known.}
 
-\item{use_ai}{Logical. Whether to use AI fallback when no coordinates are provided.}
-
-\item{require_coords}{Logical. If TRUE, error when coordinates cannot be resolved.}
+\item{use_ai}{Logical. Whether to use AI fallback when no coordinates are provided. Default: TRUE.}
 
 \item{use_cache}{Logical. Whether to use caching for AI responses. Default: TRUE.}
 }

@@ -16,17 +16,19 @@ test_that("resolve_location returns provided coordinates without AI", {
 })
 
 test_that("resolve_location errors when coordinates cannot be resolved and AI is disabled", {
-    expect_error(
+    expect_warning(
         resolve_location("Unknown Place", use_ai = FALSE),
         "Unable to resolve location to coordinates"
     )
 })
 
 test_that("resolve_location returns unknown when coordinates are optional and AI is disabled", {
-    result <- resolve_location(
-        "Unknown Place",
-        use_ai = FALSE,
-        require_coords = FALSE
+    expect_warning(
+        result <- resolve_location(
+            "Unknown Place",
+            use_ai = FALSE
+        ),
+        "Unable to resolve location to coordinates"
     )
 
     expect_null(result$latitude)
