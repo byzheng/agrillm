@@ -6,6 +6,7 @@
 #'
 #' @param crop_input Character string. The crop name or description to resolve.
 #' @param use_ai Logical. Whether to use AI fallback if no match is found. Default: TRUE.
+#' @param use_cache Logical. Whether to use caching for AI responses. Default: TRUE.
 #' @return A list with elements: crop (resolved crop name), source ("direct_match", "heuristic", or "ai_resolution"), raw_input (original input).
 #' @examples
 #' resolve_crop("wheat")
@@ -16,7 +17,7 @@
 #' # resolve_crop("unknown crop", use_ai = TRUE)
 #' 
 #' @export
-resolve_crop <- function(crop_input, use_ai = TRUE) {
+resolve_crop <- function(crop_input, use_ai = TRUE, use_cache = TRUE) {
     stopifnot(is.character(crop_input), length(crop_input) == 1)
     raw <- tolower(trimws(crop_input))
 

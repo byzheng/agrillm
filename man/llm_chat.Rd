@@ -7,7 +7,7 @@
 llm_chat(
   prompt,
   use_cache = FALSE,
-  persist_cache = FALSE,
+  persist_cache = TRUE,
   cache_path = NULL,
   ...
 )
@@ -19,7 +19,7 @@ llm_chat(
 identical requests within the current R session. Default: \code{FALSE}.}
 
 \item{persist_cache}{Logical. If \code{TRUE}, persist cached responses to disk so
-they can be reloaded in later sessions. Default: \code{FALSE}.}
+they can be reloaded in later sessions. Default: \code{TRUE}.}
 
 \item{cache_path}{Optional character string path to the cache file used when
 \code{persist_cache = TRUE}. Default: \code{.cache_agrillm.rds} in the current working

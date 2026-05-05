@@ -4,10 +4,14 @@
 \alias{resolve_sowing}
 \title{Resolve a sowing window from free-text input}
 \usage{
-resolve_sowing(sowing_input)
+resolve_sowing(sowing_input, use_ai = TRUE, use_cache = TRUE)
 }
 \arguments{
 \item{sowing_input}{Character string. The sowing window description to resolve.}
+
+\item{use_ai}{Logical. Whether to use AI fallback if no deterministic match is found. Default: TRUE.}
+
+\item{use_cache}{Logical. Whether to use caching for AI responses. Default: TRUE.}
 }
 \value{
 A list with fields: type, start, end, shift, source, raw_input, assumptions. If not resolvable, type is "unknown".

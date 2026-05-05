@@ -9,12 +9,13 @@
 #' @param longitude Numeric. Longitude if already known.
 #' @param use_ai Logical. Whether to use AI fallback when no coordinates are provided.
 #' @param require_coords Logical. If TRUE, error when coordinates cannot be resolved.
+#' @param use_cache Logical. Whether to use caching for AI responses. Default: TRUE.
 #'
 #' @return A list with latitude, longitude, display_name, source, confidence, raw_input, assumptions.
 #' @export
 resolve_location <- function(
     location_input = NULL, latitude = NULL, longitude = NULL,
-    use_ai = TRUE, require_coords = TRUE) {
+    use_ai = TRUE, require_coords = TRUE, use_cache = TRUE) {
 
     # If coords already provided, accept them
     if (!is.null(latitude) && !is.null(longitude)) {

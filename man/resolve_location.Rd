@@ -9,7 +9,8 @@ resolve_location(
   latitude = NULL,
   longitude = NULL,
   use_ai = TRUE,
-  require_coords = TRUE
+  require_coords = TRUE,
+  use_cache = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ resolve_location(
 \item{use_ai}{Logical. Whether to use AI fallback when no coordinates are provided.}
 
 \item{require_coords}{Logical. If TRUE, error when coordinates cannot be resolved.}
+
+\item{use_cache}{Logical. Whether to use caching for AI responses. Default: TRUE.}
 }
 \value{
 A list with latitude, longitude, display_name, source, confidence, raw_input, assumptions.

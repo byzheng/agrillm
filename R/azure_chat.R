@@ -12,7 +12,7 @@
 #'
 #' @param message A character string with the prompt or message.
 #' @param use_cache Logical. If `TRUE`, reuse a cached response for identical
-#' requests within the current R session. Default: `TRUE`.
+#' requests within the current R session. Default: `FALSE`.
 #' @param persist_cache Logical. If `TRUE`, persist cached responses to disk so
 #' they can be reloaded in later sessions. Default: `TRUE`.
 #' @param cache_path Optional character string path to the cache file used when
@@ -27,7 +27,7 @@
 #' response <- azure_chat(msg)
 #' print(response)
 #' }
-azure_chat <- function(message, use_cache = TRUE, persist_cache = TRUE, cache_path = NULL, ...) {
+azure_chat <- function(message, use_cache = FALSE, persist_cache = TRUE, cache_path = NULL, ...) {
     stopifnot(is.character(message), length(message) == 1)
     stopifnot(is.logical(use_cache), length(use_cache) == 1, !is.na(use_cache))
     stopifnot(is.logical(persist_cache), length(persist_cache) == 1, !is.na(persist_cache))

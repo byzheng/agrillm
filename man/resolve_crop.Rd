@@ -4,12 +4,14 @@
 \alias{resolve_crop}
 \title{Resolve a crop name to a supported crop}
 \usage{
-resolve_crop(crop_input, use_ai = TRUE)
+resolve_crop(crop_input, use_ai = TRUE, use_cache = TRUE)
 }
 \arguments{
 \item{crop_input}{Character string. The crop name or description to resolve.}
 
 \item{use_ai}{Logical. Whether to use AI fallback if no match is found. Default: TRUE.}
+
+\item{use_cache}{Logical. Whether to use caching for AI responses. Default: TRUE.}
 }
 \value{
 A list with elements: crop (resolved crop name), source ("direct_match", "heuristic", or "ai_resolution"), raw_input (original input).

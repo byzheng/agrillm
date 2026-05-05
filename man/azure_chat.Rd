@@ -6,7 +6,7 @@
 \usage{
 azure_chat(
   message,
-  use_cache = TRUE,
+  use_cache = FALSE,
   persist_cache = TRUE,
   cache_path = NULL,
   ...
@@ -16,7 +16,7 @@ azure_chat(
 \item{message}{A character string with the prompt or message.}
 
 \item{use_cache}{Logical. If \code{TRUE}, reuse a cached response for identical
-requests within the current R session. Default: \code{TRUE}.}
+requests within the current R session. Default: \code{FALSE}.}
 
 \item{persist_cache}{Logical. If \code{TRUE}, persist cached responses to disk so
 they can be reloaded in later sessions. Default: \code{TRUE}.}

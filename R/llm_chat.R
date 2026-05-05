@@ -4,14 +4,14 @@
 #' @param use_cache Logical. If `TRUE`, reuse cached backend responses for
 #' identical requests within the current R session. Default: `FALSE`.
 #' @param persist_cache Logical. If `TRUE`, persist cached responses to disk so
-#' they can be reloaded in later sessions. Default: `FALSE`.
+#' they can be reloaded in later sessions. Default: `TRUE`.
 #' @param cache_path Optional character string path to the cache file used when
 #' `persist_cache = TRUE`. Default: `.cache_agrillm.rds` in the current working
 #' directory.
 #' @param ... Additional arguments passed to the backend chat function.
 #' @return The response from the LLM backend.
 #' @export
-llm_chat <- function(prompt, use_cache = FALSE, persist_cache = FALSE, cache_path = NULL, ...) {
+llm_chat <- function(prompt, use_cache = FALSE, persist_cache = TRUE, cache_path = NULL, ...) {
     stopifnot(is.character(prompt), length(prompt) == 1)
     stopifnot(is.logical(use_cache), length(use_cache) == 1, !is.na(use_cache))
     stopifnot(is.logical(persist_cache), length(persist_cache) == 1, !is.na(persist_cache))

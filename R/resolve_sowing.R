@@ -3,6 +3,8 @@
 #' This function attempts to interpret a farmer's free-text description of a sowing window using a combination of deterministic rules and an LLM fallback (only AI is implemented now). It returns a structured sowing window with start/end dates and any assumptions made.
 #' 
 #' @param sowing_input Character string. The sowing window description to resolve.
+#' @param use_ai Logical. Whether to use AI fallback if no deterministic match is found. Default: TRUE.
+#' @param use_cache Logical. Whether to use caching for AI responses. Default: TRUE.
 #' @return A list with fields: type, start, end, shift, source, raw_input, assumptions. If not resolvable, type is "unknown".
 #' @examples
 #' # Example with AI backend configured:
@@ -10,7 +12,7 @@
 #' # resolve_sowing("mid June")
 #' # resolve_sowing("unknown phrase")
 #' @export
-resolve_sowing <- function(sowing_input) {
+resolve_sowing <- function(sowing_input, use_ai = TRUE, use_cache = TRUE) {
     raw <- tolower(trimws(sowing_input))
     message("Resolving sowing window for input: '", sowing_input, "'")
     res <-  .resolve_sowing_with_ai(raw)
