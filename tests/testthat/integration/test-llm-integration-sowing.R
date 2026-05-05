@@ -64,3 +64,32 @@ test_that("resolve_sowing returns a window for 'Before 10 May' [LLM integration]
 })
 
 
+
+test_that("resolve_sowing returns a window for 'As soon as we get a break' [LLM integration]", {
+    skip_if_no_llm()
+    result <- resolve_sowing("As soon as we get a break")
+    expect_equal(result$type, "window")
+    expect_true(!is.null(result$start) && !is.null(result$end))
+    expect_equal(result$start, "01-Apr")
+    expect_equal(result$end, "31-Jul")
+    expect_equal(result$shift, "before")
+    expect_equal(result$source, "user_phrase")
+    expect_equal(result$raw_input, "as soon as we get a break")
+})
+
+
+
+
+test_that("resolve_sowing returns a window for 'As soon before May' [LLM integration]", {
+    skip_if_no_llm()
+    result <- resolve_sowing("As soon before May")
+    expect_equal(result$type, "window")
+    expect_true(!is.null(result$start) && !is.null(result$end))
+    expect_equal(result$start, "01-Apr")
+    expect_equal(result$end, "30-Apr")
+    expect_equal(result$shift, "before")
+    expect_equal(result$source, "user_phrase")
+    expect_equal(result$raw_input, "as soon before may")
+})
+
+

@@ -68,6 +68,20 @@ After a specifc day can be indicated with "after <day> <month>"
 - "start" as the specified day
 - "end" as 10 days after the specified day
 
+As soon as we get a break 
+
+- which should set the broad window from 1 April (start) to 31 July (end)
+- shift should be "before"
+- assumptions should note that this is a broad interpretation based on the presence of "break" in the input and typical sowing periods for Australian grains
+
+As soon as before June
+
+- which should set the end to 31 May and shift to "before"
+- start can be set to 1 April as a reasonable assumption for the earliest sowing date for many Australian grains
+- assumptions should note that this is a broad interpretation based on the presence of "before June" in the input and typical sowing periods for Australian grains
+
+
+
 Constraints:
 
 - Do not include a year
