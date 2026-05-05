@@ -9,9 +9,13 @@
     path
 }
 
+.llm_cache_default_dir <- function() {
+    file.path(getwd(), ".cache_agrillm")
+}
+
 .llm_cache_default_path <- function(path = NULL) {
     if (is.null(path)) {
-        return(.llm_cache_ensure_dir(file.path(getwd(), ".cache_agrillm/cache.rds")))
+        return(.llm_cache_ensure_dir(file.path(.llm_cache_default_dir(), "cache.rds")))
     }
 
     stopifnot(is.character(path), length(path) == 1, nzchar(path))
@@ -186,7 +190,8 @@ llm_cache_path <- function(path = NULL) {
 #' Clear LLM chat cache
 #'
 #' Clears cached LLM responses. You can optionally restrict removal to a single
-#' prompt and/or provider.
+#' prompt and/or provider. A full clear also removes the default
+#' `.cache_agrillm` directory in the current working directory.
 #'
 #' @param message Optional character string. If provided, only matching cache
 #' entries are removed.
@@ -205,6 +210,10 @@ llm_cache_clear <- function(message = NULL, provider = NULL) {
     cache_keys <- .llm_cache_filter_keys(message = message, provider = provider)
     if (length(cache_keys) > 0) {
         rm(list = cache_keys, envir = .llm_chat_cache)
+    }
+
+    if (is.null(message) && is.null(provider)) {
+        unlink(.llm_cache_default_dir(), recursive = TRUE, force = TRUE)
     }
 
     invisible(length(cache_keys))

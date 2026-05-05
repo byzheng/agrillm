@@ -176,3 +176,24 @@ test_that("llm_cache_path creates the default cache directory", {
         )
     )
 })
+
+test_that("llm_cache_clear removes the default cache directory", {
+    base_dir <- tempfile(pattern = "agrillm-cache-")
+    dir.create(base_dir)
+
+    old_wd <- getwd()
+    setwd(base_dir)
+    on.exit({
+        setwd(old_wd)
+        unlink(base_dir, recursive = TRUE, force = TRUE)
+    }, add = TRUE)
+
+    cache_path <- llm_cache_path()
+    saveRDS(list(version = 1L, saved_at = Sys.time(), entries = list()), cache_path)
+
+    expect_true(dir.exists(file.path(base_dir, ".cache_agrillm")))
+
+    llm_cache_clear()
+
+    expect_false(dir.exists(file.path(base_dir, ".cache_agrillm")))
+})

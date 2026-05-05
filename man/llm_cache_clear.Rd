@@ -18,5 +18,6 @@ Invisibly returns the number of removed cache entries.
 }
 \description{
 Clears cached LLM responses. You can optionally restrict removal to a single
-prompt and/or provider.
+prompt and/or provider. A full clear also removes the default
+\code{.cache_agrillm} directory in the current working directory.
 }
