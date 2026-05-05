@@ -15,7 +15,8 @@
 
 .llm_cache_default_path <- function(path = NULL) {
     if (is.null(path)) {
-        return(.llm_cache_ensure_dir(file.path(.llm_cache_default_dir(), "cache.rds")))
+        cache_path <- .llm_cache_ensure_dir(file.path(.llm_cache_default_dir(), "cache.rds"))
+        return(normalizePath(cache_path, winslash = "/", mustWork = FALSE))
     }
 
     stopifnot(is.character(path), length(path) == 1, nzchar(path))
