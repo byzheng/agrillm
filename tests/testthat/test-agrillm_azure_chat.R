@@ -163,14 +163,15 @@ test_that("llm_cache_path creates the default cache directory", {
         setwd(old_wd)
         unlink(base_dir, recursive = TRUE, force = TRUE)
     }, add = TRUE)
+    current_dir <- getwd()
 
     cache_path <- llm_cache_path()
 
-    expect_true(dir.exists(file.path(base_dir, ".cache_agrillm")))
+    expect_true(dir.exists(file.path(current_dir, ".cache_agrillm")))
     expect_equal(
         normalizePath(cache_path, winslash = "/", mustWork = FALSE),
         normalizePath(
-            file.path(base_dir, ".cache_agrillm", "cache.rds"),
+            file.path(current_dir, ".cache_agrillm", "cache.rds"),
             winslash = "/",
             mustWork = FALSE
         )
