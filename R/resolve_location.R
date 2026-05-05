@@ -53,7 +53,8 @@ resolve_location <- function(
     }
 
     list(
-        latitude = NULL, longitude = NULL,
+        latitude = NULL, 
+        longitude = NULL,
         display_name = NULL,
         source = "unknown",
         confidence = "low",

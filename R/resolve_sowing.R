@@ -16,10 +16,21 @@ resolve_sowing <- function(sowing_input, use_ai = TRUE, use_cache = TRUE) {
     raw <- tolower(trimws(sowing_input))
     message("Resolving sowing window for input: '", sowing_input, "'")
     res <-  .resolve_sowing_with_ai(raw)
-    if (res$type == "unknown") {
-        stop("Unable to resolve sowing window from input: ", sowing_input)
+    if (res$type != "unknown") {
+        return(res)
     }
-    return(res)
+    warning("Unable to resolve sowing window from input: ", sowing_input)
+    return(
+        list(
+            type = "unknown",
+            start  = NULL,
+            end = NULL,
+            shift = NULL,
+            source = "ai_resolution",
+            raw_input = sowing_input,
+            assumptions = "LLM was unable to interpret the input as a sowing window"
+        )
+    )
 }
 
 #' Internal: Use LLM to resolve sowing window

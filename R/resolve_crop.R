@@ -96,7 +96,14 @@ Rules:
     reply <- tolower(trimws(reply))
     if (reply %in% candidate_crops) {
         return(reply)
-    } else {
-        return("unknown")
     }
+    warning("LLM was unable to resolve crop input: ", raw_input)
+    return(
+        list(
+            crop = "unknown",
+            source = "ai_resolution",
+            raw_input = raw_input,
+            assumptions = "LLM was unable to match input to supported crops"
+        )
+    )
 }
