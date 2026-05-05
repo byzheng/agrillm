@@ -85,7 +85,6 @@ resolve_soil_nitrogen <- function(soil_n_input = NULL, use_ai = TRUE, use_cache 
 #' Internal: Use LLM to resolve soil nitrogen
 #'
 #' @param raw_input Character. The user input.
-#' @param candidate_crops Character vector. Supported crops.
 #' @param use_cache Logical. Whether to use caching for AI responses.
 #' @return The best matching crop or "unknown".
 .resolve_soil_n_with_ai <- function(raw_input, use_cache = TRUE) {

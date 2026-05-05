@@ -10,8 +10,6 @@
 \item{raw_input}{Character. The user input.}
 
 \item{use_cache}{Logical. Whether to use caching for AI responses.}
-
-\item{candidate_crops}{Character vector. Supported crops.}
 }
 \value{
 The best matching crop or "unknown".
