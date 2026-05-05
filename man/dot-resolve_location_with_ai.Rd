@@ -4,10 +4,12 @@
 \alias{.resolve_location_with_ai}
 \title{Internal: Use LLM to resolve location}
 \usage{
-.resolve_location_with_ai(raw_input)
+.resolve_location_with_ai(raw_input, use_cache = TRUE)
 }
 \arguments{
 \item{raw_input}{Character. The user input.}
+
+\item{use_cache}{Logical. Whether to use caching for AI responses.}
 }
 \value{
 A list with latitude, longitude, display_name, source, confidence, raw_input, assumptions.

@@ -25,8 +25,9 @@ resolve_sowing <- function(sowing_input, use_ai = TRUE, use_cache = TRUE) {
 #' Internal: Use LLM to resolve sowing window
 #'
 #' @param raw_input Character. The user input.
+#' @param use_cache Logical. Whether to use caching for AI responses.
 #' @return A list with structured sowing window fields, or type = "unknown" if not resolvable.
-.resolve_sowing_with_ai <- function(raw_input) {
+.resolve_sowing_with_ai <- function(raw_input, use_cache = TRUE) {
     stopifnot(is.character(raw_input), length(raw_input) == 1)
     prompt <- sprintf('
 
@@ -101,7 +102,7 @@ Example output format:
     "assumptions": null
 }     
     ', raw_input)
-    response <- llm_chat(prompt)
+    response <- llm_chat(prompt, use_cache = use_cache)
     reply <- tidyllm::get_reply(response)
     # Attempt to parse JSON
     parsed <- tryCatch(jsonlite::fromJSON(reply), error = function(e) NULL)

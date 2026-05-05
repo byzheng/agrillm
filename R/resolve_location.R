@@ -41,7 +41,7 @@ resolve_location <- function(
         # match <- lookup_gazetteer(raw)
 
         if (use_ai) {
-            loc <- .resolve_location_with_ai(raw)
+            loc <- .resolve_location_with_ai(raw, use_cache = use_cache)
             if (!is.null(loc$latitude) && !is.null(loc$longitude)) {
                 return(loc)
             }
@@ -68,8 +68,9 @@ resolve_location <- function(
 #' Internal: Use LLM to resolve location
 #'
 #' @param raw_input Character. The user input.
+#' @param use_cache Logical. Whether to use caching for AI responses.
 #' @return A list with latitude, longitude, display_name, source, confidence, raw_input, assumptions.
-.resolve_location_with_ai <- function(raw_input) {
+.resolve_location_with_ai <- function(raw_input, use_cache = TRUE) {
     stopifnot(is.character(raw_input), length(raw_input) == 1)
     prompt <- sprintf('
 
@@ -102,7 +103,7 @@ Example output format:
 }
     ', raw_input, raw_input)
 
-    response <- llm_chat(prompt)
+    response <- llm_chat(prompt, use_cache = use_cache)
     reply <- tidyllm::get_reply(response)
     # Attempt to parse JSON
     parsed <- tryCatch(jsonlite::fromJSON(reply), error = function(e) NULL)
