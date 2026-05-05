@@ -46,10 +46,15 @@ resolve_crop <- function(crop_input, use_ai = TRUE, use_cache = TRUE) {
 
     # 3. AI fallback (optional)
     if (!use_ai) {
-        stop("Unable to resolve crop: ", crop_input)
+        warning("Unable to resolve crop: ", crop_input)
+        return(list(
+            crop = "unknown",
+            source = "unresolvable",
+            raw_input = crop_input
+        )) 
     }
     message("No direct match for crop '", crop_input, "'. Using AI to attempt resolution...")
-    ai_crop <- .resolve_crop_with_ai(raw, names(SUPPORTED_CROPS), use_cache = use_cache)
+    ai_crop <- .resolve_crop_with_ai(raw, names(SUPPORTED_CROPS))
     return(
         list(
             crop = ai_crop,
@@ -64,9 +69,8 @@ resolve_crop <- function(crop_input, use_ai = TRUE, use_cache = TRUE) {
 #'
 #' @param raw_input Character. The user input.
 #' @param candidate_crops Character vector. Supported crops.
-#' @param use_cache Logical. Whether to use caching for AI responses.
 #' @return The best matching crop or "unknown".
-.resolve_crop_with_ai <- function(raw_input, candidate_crops, use_cache = TRUE) {
+.resolve_crop_with_ai <- function(raw_input, candidate_crops) {
     stopifnot(is.character(raw_input), length(raw_input) == 1)
     stopifnot(is.character(candidate_crops), length(candidate_crops) > 0)
     
@@ -91,19 +95,12 @@ Rules:
     paste(candidate_crops, collapse = ","),
     raw_input
     )
-    response <- llm_chat(prompt, use_cache = use_cache)
+    response <- llm_chat(prompt)
     reply <- tidyllm::get_reply(response)  
     reply <- tolower(trimws(reply))
     if (reply %in% candidate_crops) {
         return(reply)
+    } else {
+        return("unknown")
     }
-    warning("LLM was unable to resolve crop input: ", raw_input)
-    return(
-        list(
-            crop = "unknown",
-            source = "ai_resolution",
-            raw_input = raw_input,
-            assumptions = "LLM was unable to match input to supported crops"
-        )
-    )
 }

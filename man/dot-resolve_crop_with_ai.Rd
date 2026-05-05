@@ -4,14 +4,12 @@
 \alias{.resolve_crop_with_ai}
 \title{Internal: Use LLM to resolve crop}
 \usage{
-.resolve_crop_with_ai(raw_input, candidate_crops, use_cache = TRUE)
+.resolve_crop_with_ai(raw_input, candidate_crops)
 }
 \arguments{
 \item{raw_input}{Character. The user input.}
 
 \item{candidate_crops}{Character vector. Supported crops.}
-
-\item{use_cache}{Logical. Whether to use caching for AI responses.}
 }
 \value{
 The best matching crop or "unknown".

@@ -15,6 +15,20 @@
 resolve_sowing <- function(sowing_input, use_ai = TRUE, use_cache = TRUE) {
     raw <- tolower(trimws(sowing_input))
     message("Resolving sowing window for input: '", sowing_input, "'")
+    if(!use_ai) {
+        warning("Unable to resolve sowing window from input: ", sowing_input)
+        return(
+            list(
+                type = "unknown",
+                start  = NULL,
+                end = NULL,
+                shift = NULL,
+                source = "unresolvable",
+                raw_input = sowing_input,
+                assumptions = "LLM fallback disabled and input could not be resolved with deterministic rules"
+            )
+        )
+    }
     res <-  .resolve_sowing_with_ai(raw)
     if (res$type != "unknown") {
         return(res)
