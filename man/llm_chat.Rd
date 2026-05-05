@@ -4,10 +4,26 @@
 \alias{llm_chat}
 \title{Unified LLM chat interface for agrillm}
 \usage{
-llm_chat(prompt, ...)
+llm_chat(
+  prompt,
+  use_cache = FALSE,
+  persist_cache = FALSE,
+  cache_path = NULL,
+  ...
+)
 }
 \arguments{
 \item{prompt}{The prompt or message to send to the LLM.}
+
+\item{use_cache}{Logical. If \code{TRUE}, reuse cached backend responses for
+identical requests within the current R session. Default: \code{FALSE}.}
+
+\item{persist_cache}{Logical. If \code{TRUE}, persist cached responses to disk so
+they can be reloaded in later sessions. Default: \code{FALSE}.}
+
+\item{cache_path}{Optional character string path to the cache file used when
+\code{persist_cache = TRUE}. Default: \code{.cache_agrillm.rds} in the current working
+directory.}
 
 \item{...}{Additional arguments passed to the backend chat function.}
 }

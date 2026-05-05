@@ -4,10 +4,26 @@
 \alias{azure_chat}
 \title{High-level function to call Azure OpenAI chat using tidyllm}
 \usage{
-azure_chat(message, ...)
+azure_chat(
+  message,
+  use_cache = TRUE,
+  persist_cache = TRUE,
+  cache_path = NULL,
+  ...
+)
 }
 \arguments{
 \item{message}{A character string with the prompt or message.}
+
+\item{use_cache}{Logical. If \code{TRUE}, reuse a cached response for identical
+requests within the current R session. Default: \code{TRUE}.}
+
+\item{persist_cache}{Logical. If \code{TRUE}, persist cached responses to disk so
+they can be reloaded in later sessions. Default: \code{TRUE}.}
+
+\item{cache_path}{Optional character string path to the cache file used when
+\code{persist_cache = TRUE}. Default: \code{.cache_agrillm.rds} in the current working
+directory.}
 
 \item{...}{Additional arguments passed to azure_openai_chat.}
 }

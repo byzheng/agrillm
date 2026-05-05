@@ -2,6 +2,13 @@
 
 export(agrillm_options)
 export(azure_chat)
+export(llm_cache_clear)
+export(llm_cache_delete)
+export(llm_cache_info)
+export(llm_cache_load)
+export(llm_cache_path)
+export(llm_cache_save)
+export(llm_cache_size)
 export(llm_chat)
 export(resolve_crop)
 export(resolve_location)
