@@ -11,6 +11,7 @@
 #' resolve_soil_nitrogen("50 kg/ha")
 #' resolve_soil_nitrogen("not sure")
 #' }
+#' @export
 resolve_soil_nitrogen <- function(soil_n_input = NULL, use_ai = TRUE, use_cache = TRUE) {
 
     # 1. Handle missing / skipped
