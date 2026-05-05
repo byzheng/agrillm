@@ -1,6 +1,4 @@
 library(testthat)
-suppressPackageStartupMessages(library(tidyllm))
-
 test_that("llm_chat calls agrillm_azure_chat for azure provider", {
     # Mock azure_chat
     with_mocked_bindings(
