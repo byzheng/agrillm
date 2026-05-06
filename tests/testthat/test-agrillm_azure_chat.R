@@ -167,11 +167,11 @@ test_that("llm_cache_path creates the default cache directory", {
 
     cache_path <- llm_cache_path()
 
-    expect_true(dir.exists(file.path(current_dir, ".cache_agrillm")))
+    expect_true(dir.exists(file.path(current_dir, ".agrillm/llm")))
     expect_equal(
         normalizePath(cache_path, winslash = "/", mustWork = FALSE),
         normalizePath(
-            file.path(current_dir, ".cache_agrillm", "cache.rds"),
+            file.path(current_dir, ".agrillm", "llm", "cache.rds"),
             winslash = "/",
             mustWork = FALSE
         )
@@ -192,9 +192,9 @@ test_that("llm_cache_clear removes the default cache directory", {
     cache_path <- llm_cache_path()
     saveRDS(list(version = 1L, saved_at = Sys.time(), entries = list()), cache_path)
 
-    expect_true(dir.exists(file.path(base_dir, ".cache_agrillm")))
+    expect_true(dir.exists(file.path(base_dir, ".agrillm", "llm")))
 
     llm_cache_clear()
 
-    expect_false(dir.exists(file.path(base_dir, ".cache_agrillm")))
+    expect_false(dir.exists(file.path(base_dir, ".agrillm", "llm")))
 })

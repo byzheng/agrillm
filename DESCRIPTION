@@ -15,7 +15,8 @@ Imports:
     digest,
     optree,
     tidyllm,
-    jsonlite
+    jsonlite,
+    rapsimng
 Remotes: 
     byzheng/rapsimng,
     irudnyts/openai

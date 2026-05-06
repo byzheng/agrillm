@@ -95,6 +95,6 @@ agrillm_options <- optree::create_options_manager(
     validators = list(
         "crops" = crops_validator,
         "llm" = llm_validator,
-        "cache_dir" = optree::v_character_scalar
+        "cache_dir" = optree::v_character_scalar()
     )
 )

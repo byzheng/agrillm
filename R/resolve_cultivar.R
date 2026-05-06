@@ -17,17 +17,18 @@ resolve_cultivar <- function(
 
 
 
-cache_apsim_cultivars <- function(
-    crop = NULL,
-    source = "APSIM-GitHub",
-    url,
-    dest_dir = "~/.agrillm/cultivars",
-    overwrite = FALSE
-) {
-    if (is.null(crop)) {
-        crop <- agrillm_options$get("crops")
-    }
-    if (missing(crop) || !is.character(crop) || length(crop) != 1) {
-        stop("Crop must be a single character string")
-    }
-}
+# cache_apsim_cultivars <- function(
+#     crop = NULL,
+#     source = "APSIM-GitHub",
+#     url,
+#     dest_dir = "~/.agrillm/cultivars",
+#     overwrite = FALSE
+# ) {
+#     if (is.null(crop)) {
+#         crop <- names(agrillm_options$get("crops"))
+#     }
+#     if (!is.character(crop)) {
+#         stop("Crop must be a character vector")
+#     }
+    
+# }

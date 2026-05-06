@@ -13,6 +13,7 @@ methods to get and set all related parameters.
 \section{Available Options}{
 
 \describe{
+\item{cache_dir}{Directory for caching AI responses. Default: ".agrillm" in the current working directory}
 \item{crops}{List of crops and their associated names. Default: list of wheat, barley, and canola varieties}
 }
 }
