@@ -47,7 +47,7 @@ resolve_soil_water <- function(soil_water_input, use_ai = TRUE, use_cache = TRUE
         )
     }
 
-    res <-  .resolve_soil_water_with_ai(raw)
+    res <-  .resolve_soil_water_with_ai(raw, use_cache = use_cache)
     if (!is.null(res) && res$type != "unknown") {
         return(res)
     }
