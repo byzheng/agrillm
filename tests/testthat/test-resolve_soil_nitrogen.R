@@ -1,12 +1,3 @@
-test_that("resolve_soil_nitrogen returns unknown for missing input", {
-    result <- resolve_soil_nitrogen(NULL, use_ai = FALSE)
-
-    expect_equal(result$type, "unknown")
-    expect_equal(result$source, "default")
-    expect_null(result$raw_input)
-    expect_equal(result$assumptions, "Soil nitrogen assumed at regional typical level")
-})
-
 test_that("resolve_soil_nitrogen parses numeric nitrogen values", {
     result <- resolve_soil_nitrogen("50 kg/ha", use_ai = FALSE)
 

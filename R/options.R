@@ -49,6 +49,7 @@ llm_validator <- function(value) {
 #'
 #' @section Available Options:
 #' \describe{
+#'   \item{cache_dir}{Directory for caching AI responses. Default: ".agrillm" in the current working directory}
 #'   \item{crops}{List of crops and their associated names. Default: list of wheat, barley, and canola varieties}
 #' }
 #'
@@ -76,6 +77,7 @@ llm_validator <- function(value) {
 #' agrillm_options$reset()
 agrillm_options <- optree::create_options_manager(
     defaults = list(
+        cache_dir = ".agrillm",
         llm = list(
             provider = "azure",
             azure = list(
@@ -92,6 +94,7 @@ agrillm_options <- optree::create_options_manager(
     ),
     validators = list(
         "crops" = crops_validator,
-        "llm" = llm_validator
+        "llm" = llm_validator,
+        "cache_dir" = optree::v_character_scalar
     )
 )

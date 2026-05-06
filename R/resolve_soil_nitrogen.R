@@ -12,8 +12,10 @@
 #' resolve_soil_nitrogen("not sure")
 #' }
 #' @export
-resolve_soil_nitrogen <- function(soil_n_input = NULL, use_ai = TRUE, use_cache = TRUE) {
-
+resolve_soil_nitrogen <- function(soil_n_input, use_ai = TRUE, use_cache = TRUE) {
+    stopifnot(is.logical(use_ai), length(use_ai) == 1) 
+    stopifnot(is.logical(use_cache), length(use_cache) == 1)
+    stopifnot(is.character(soil_n_input) || is.numeric(soil_n_input) || is.null(soil_n_input), length(soil_n_input) == 1)
     # 1. Handle missing / skipped
     if (is.null(soil_n_input) || is.na(soil_n_input) || soil_n_input == "") {
         return(list(

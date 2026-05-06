@@ -13,6 +13,10 @@
 #' # resolve_sowing("unknown phrase")
 #' @export
 resolve_sowing <- function(sowing_input, use_ai = TRUE, use_cache = TRUE) {
+    stopifnot(is.logical(use_ai), length(use_ai) == 1)
+    stopifnot(is.logical(use_cache), length(use_cache) == 1)
+    stopifnot(is.character(sowing_input) || is.null(sowing_input), length(sowing_input) == 1)
+
     raw <- tolower(trimws(sowing_input))
     message("Resolving sowing window for input: '", sowing_input, "'")
     if(!use_ai) {

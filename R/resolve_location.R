@@ -15,6 +15,12 @@
 resolve_location <- function(
     location_input = NULL, latitude = NULL, longitude = NULL,
     use_ai = TRUE, use_cache = TRUE) {
+    stopifnot(is.null(location_input) || is.character(location_input), length(location_input) <= 1)
+    stopifnot(is.null(latitude) || (is.numeric(latitude) && length(latitude) == 1 && latitude >= -90 && latitude <= 90))
+    stopifnot(is.null(longitude) || (is.numeric(longitude) && length(longitude) == 1 && longitude >= -180 && longitude <= 180))
+    
+    stopifnot(is.logical(use_ai), length(use_ai) == 1)
+    stopifnot(is.logical(use_cache), length(use_cache) == 1)
 
     # If coords already provided, accept them
     if (!is.null(latitude) && !is.null(longitude)) {

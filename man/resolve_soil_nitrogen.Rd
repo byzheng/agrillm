@@ -4,7 +4,7 @@
 \alias{resolve_soil_nitrogen}
 \title{Resolve soil nitrogen input}
 \usage{
-resolve_soil_nitrogen(soil_n_input = NULL, use_ai = TRUE, use_cache = TRUE)
+resolve_soil_nitrogen(soil_n_input, use_ai = TRUE, use_cache = TRUE)
 }
 \arguments{
 \item{soil_n_input}{Character or numeric. User input describing soil nitrogen status (e.g. "low", "moderate", "high", "50 kg/ha").}

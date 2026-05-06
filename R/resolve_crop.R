@@ -19,6 +19,8 @@
 #' @export
 resolve_crop <- function(crop_input, use_ai = TRUE, use_cache = TRUE) {
     stopifnot(is.character(crop_input), length(crop_input) == 1)
+    stopifnot(is.logical(use_ai), length(use_ai) == 1)
+    stopifnot(is.logical(use_cache), length(use_cache) == 1)
     raw <- tolower(trimws(crop_input))
 
     SUPPORTED_CROPS <- agrillm_options$get("crops")

@@ -10,7 +10,7 @@
 }
 
 .llm_cache_default_dir <- function() {
-    file.path(getwd(), ".cache_agrillm")
+    file.path(getwd(), ".agrillm")
 }
 
 .llm_cache_default_path <- function(path = NULL) {
