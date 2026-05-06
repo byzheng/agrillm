@@ -67,14 +67,7 @@ resolve_cultivar <- function(
     }
     message("No direct match for cultivar '", cultivar_input, "'. Using AI to attempt resolution...")
     ai_cultivar <- .resolve_cultivar_with_ai(raw, supported_cultivars, use_cache = use_cache)
-    return(
-        list(
-            cultivar = ai_cultivar,
-            source = "ai_resolution",
-            raw_input = cultivar_input,
-            assumptions = "AI fallback used to resolve cultivar"
-        )
-    )
+    return(ai_cultivar)
 
 }
 
@@ -99,12 +92,12 @@ Farmer input: %s
 
 Task:
 Return the single best matching cultivar from the supported list.
-If none clearly match, return \"unknown\".
+If none clearly match, return "unknown".
 
 Rules:
 - Do not invent new cultivars
 - Do not explain
-- Return only one word from the list or \"unknown\"
+- Return only one word from the list or "unknown"
 
 Example output format:
 {
@@ -197,6 +190,7 @@ cache_apsim_cultivars <- function(
     stopifnot(is.logical(overwrite), length(overwrite) == 1)
 
     # Require explicit raw GitHub Resources directory
+    apsim_resources_dir <- gsub("/$", "", apsim_resources_dir) # remove trailing slash if present
     if (!grepl("^https://raw\\.githubusercontent\\.com/.+/Models/Resources$", apsim_resources_dir)) {
         stop(
         "apsim_resources_dir must be a raw GitHub URL to APSIM Models/Resources, e.g.\n",
