@@ -2,7 +2,7 @@
 % Please edit documentation in R/apply_soil_nitrogen.R
 \name{distribute_soil_n}
 \alias{distribute_soil_n}
-\title{Distribute Total Soil Nitrogen Across Soil Layers}
+\title{Distribute Total Soil Mineral Nitrogen Across Soil Layers}
 \usage{
 distribute_soil_n(
   total_n,
@@ -13,8 +13,8 @@ distribute_soil_n(
 )
 }
 \arguments{
-\item{total_n}{Numeric scalar. Total profile nitrogen to distribute
-(\eqn{kg/ha}). Must be finite and non-negative.}
+\item{total_n}{Numeric scalar. Total profile mineral nitrogen to
+distribute (\eqn{kg/ha}). Must be finite and non-negative.}
 
 \item{thickness_mm}{Numeric vector. Layer thicknesses in mm.
 All values must be finite and strictly positive.}
@@ -23,21 +23,37 @@ All values must be finite and strictly positive.}
 \code{"exponential"} (default), \code{"uniform"}, or \code{"truncated"}.}
 
 \item{lambda_mm}{Numeric scalar. Exponential decay length scale in mm,
-used only when \code{method = "exponential"}. Must be finite and > 0.}
+used only when \code{method = "exponential"}. Smaller values produce
+steeper surface concentration; larger values approach uniform
+distributions.}
 
 \item{max_depth_mm}{Numeric scalar. Cutoff depth in mm for
-\code{method = "truncated"}; N is distributed uniformly from 0 to this
-depth and zero below. Must be finite and > 0 when supplied.}
+\code{method = "truncated"}; nitrogen is distributed uniformly from
+0 to this depth and zero below.}
 }
 \value{
-Numeric vector of layer nitrogen values (\eqn{kg/ha}), with
-length equal to \code{length(thickness_mm)}.
+Numeric vector of layer nitrogen values (\eqn{kg/ha}),
+with length equal to \code{length(thickness_mm)}.
 }
 \description{
-Allocates a total profile mineral nitrogen amount (
-\eqn{kg/ha}) into soil layers using a generic depth kernel.
-The function is deterministic, returns non-negative layer values,
+Allocates a total profile mineral nitrogen amount (\eqn{kg/ha})
+into soil layers using a generic depth-weighted kernel.
+This function is deterministic, returns non-negative layer values,
 and conserves the supplied total nitrogen.
+}
+\details{
+The exponential method is intended as a pragmatic default for
+pre-sowing initialisation when measured soil nitrate profiles
+are unavailable, representing situations where mineralised
+nitrogen from decomposing residues and roots is concentrated
+near the soil surface and declines with depth. Alternative
+kernels are provided to support simpler assumptions or
+truncated rooting zones.
+
+This function does not attempt to reproduce measured soil nitrate
+profiles or rainfall-driven redistribution. Where detailed
+soil nitrogen measurements or continuous system spin-up
+simulations are available, those approaches should be preferred.
 }
 \examples{
 library(agrillm)

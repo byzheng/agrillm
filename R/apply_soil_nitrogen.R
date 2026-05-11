@@ -1,25 +1,42 @@
-
-#' Distribute Total Soil Nitrogen Across Soil Layers
+#' Distribute Total Soil Mineral Nitrogen Across Soil Layers
 #'
-#' Allocates a total profile mineral nitrogen amount (
-#' \eqn{kg/ha}) into soil layers using a generic depth kernel.
-#' The function is deterministic, returns non-negative layer values,
+#' Allocates a total profile mineral nitrogen amount (\eqn{kg/ha})
+#' into soil layers using a generic depth-weighted kernel.
+#' This function is deterministic, returns non-negative layer values,
 #' and conserves the supplied total nitrogen.
 #'
-#' @param total_n Numeric scalar. Total profile nitrogen to distribute
-#'   (\eqn{kg/ha}). Must be finite and non-negative.
+#' The exponential method is intended as a pragmatic default for
+#' pre-sowing initialisation when measured soil nitrate profiles
+#' are unavailable, representing situations where mineralised
+#' nitrogen from decomposing residues and roots is concentrated
+#' near the soil surface and declines with depth. Alternative
+#' kernels are provided to support simpler assumptions or
+#' truncated rooting zones.
+#'
+#' @param total_n Numeric scalar. Total profile mineral nitrogen to
+#'   distribute (\eqn{kg/ha}). Must be finite and non-negative.
 #' @param thickness_mm Numeric vector. Layer thicknesses in mm.
 #'   All values must be finite and strictly positive.
 #' @param method Character scalar. Distribution kernel to use:
 #'   `"exponential"` (default), `"uniform"`, or `"truncated"`.
 #' @param lambda_mm Numeric scalar. Exponential decay length scale in mm,
-#'   used only when `method = "exponential"`. Must be finite and > 0.
+#'   used only when `method = "exponential"`. Smaller values produce
+#'   steeper surface concentration; larger values approach uniform
+#'   distributions.
 #' @param max_depth_mm Numeric scalar. Cutoff depth in mm for
-#'   `method = "truncated"`; N is distributed uniformly from 0 to this
-#'   depth and zero below. Must be finite and > 0 when supplied.
+#'   `method = "truncated"`; nitrogen is distributed uniformly from
+#'   0 to this depth and zero below.
 #'
-#' @return Numeric vector of layer nitrogen values (\eqn{kg/ha}), with
-#'   length equal to `length(thickness_mm)`.
+#' @return Numeric vector of layer nitrogen values (\eqn{kg/ha}),
+#'   with length equal to `length(thickness_mm)`.
+#'
+#' @details
+#' This function does not attempt to reproduce measured soil nitrate
+#' profiles or rainfall-driven redistribution. Where detailed
+#' soil nitrogen measurements or continuous system spin-up
+#' simulations are available, those approaches should be preferred.
+#'
+#' @export
 #'
 #' @examples
 #' library(agrillm)
@@ -60,7 +77,6 @@
 #'     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
 #' }
 #'
-#' @export
 distribute_soil_n <- function(
     total_n,
     thickness_mm,
