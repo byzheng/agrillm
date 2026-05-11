@@ -2,22 +2,22 @@
 % Please edit documentation in R/resolve_fert_nitrogen.R
 \name{resolve_fertilisation_nitrogen}
 \alias{resolve_fertilisation_nitrogen}
-\title{Resolve soil nitrogen input}
+\title{Resolve fertilisation nitrogen input}
 \usage{
 resolve_fertilisation_nitrogen(fert_n_input, use_ai = TRUE, use_cache = TRUE)
 }
 \arguments{
+\item{fert_n_input}{Character or numeric. User input describing fertilisation nitrogen status (e.g. "low", "moderate", "high", "50 kg/ha").}
+
 \item{use_ai}{Logical. Whether to use AI fallback if input cannot be resolved with deterministic rules. Default: TRUE.}
 
 \item{use_cache}{Logical. Whether to use caching for AI responses. Default: TRUE}
-
-\item{soil_n_input}{Character or numeric. User input describing soil nitrogen status (e.g. "low", "moderate", "high", "50 kg/ha").}
 }
 \value{
 A list with fields: type ("measured", "categorical", "unknown"), value (numeric if measured), status (categorical if categorical), unit, source, raw_input, assumptions.
 }
 \description{
-Resolve soil nitrogen input
+Resolve fertilisation nitrogen input
 }
 \examples{
 

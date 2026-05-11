@@ -1,6 +1,6 @@
-#' Resolve soil nitrogen input
+#' Resolve fertilisation nitrogen input
 #' 
-#' @param soil_n_input Character or numeric. User input describing soil nitrogen status (e.g. "low", "moderate", "high", "50 kg/ha").
+#' @param fert_n_input Character or numeric. User input describing fertilisation nitrogen status (e.g. "low", "moderate", "high", "50 kg/ha").
 #' @param use_ai Logical. Whether to use AI fallback if input cannot be resolved with deterministic rules. Default: TRUE.
 #' @param use_cache Logical. Whether to use caching for AI responses. Default: TRUE
 #' @return A list with fields: type ("measured", "categorical", "unknown"), value (numeric if measured), status (categorical if categorical), unit, source, raw_input, assumptions.
