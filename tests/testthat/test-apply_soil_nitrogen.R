@@ -73,3 +73,39 @@ test_that("distribute_soil_n validates inputs", {
         "max_depth_mm must be supplied as a single finite positive number"
     )
 })
+
+test_that("apply_soil_nitrogen updates the APSIM NO3 profile for measured inputs", {
+    apsimx_path <- testthat::test_path("..", "..", "inst", "templates", "wheat.apsimx")
+    apsimx <- rapsimng::read_apsimx(apsimx_path)
+
+    physical_node <- rapsimng::search_path(apsimx, "[Soil].Physical")
+    thickness <- unlist(physical_node$node$Thickness) |> as.numeric()
+    expected <- distribute_soil_n(50, thickness)
+
+    updated <- apply_soil_nitrogen(apsimx, list(value = 50))
+    nitrogen_node <- rapsimng::search_path(updated, "[Soil].NO3")
+    evidence <- attr(updated, "agrillm")$soil_nitrogen
+
+    expect_equal(unlist(nitrogen_node$node$Thickness) |> as.numeric(), thickness)
+    expect_equal(unlist(nitrogen_node$node$InitialValues) |> as.numeric(), expected)
+    expect_equal(nitrogen_node$node$InitialValuesUnits, 1)
+    expect_equal(evidence$soil_nitrogen, 50)
+    expect_equal(
+        evidence$assumptions,
+        "Assumed soil nitrogen distribution exponential along soil profile."
+    )
+})
+
+test_that("apply_soil_nitrogen leaves the APSIM NO3 profile unchanged for unknown inputs", {
+    apsimx_path <- testthat::test_path("..", "..", "inst", "templates", "wheat.apsimx")
+    apsimx <- rapsimng::read_apsimx(apsimx_path)
+
+    initial_no3 <- rapsimng::search_path(apsimx, "[Soil].NO3")
+    updated <- apply_soil_nitrogen(apsimx, list(type = "unknown"))
+    updated_no3 <- rapsimng::search_path(updated, "[Soil].NO3")
+    evidence <- attr(updated, "agrillm")$soil_nitrogen
+
+    expect_equal(updated_no3$node$InitialValues, initial_no3$node$InitialValues)
+    expect_null(evidence$soil_nitrogen)
+    expect_null(evidence$assumptions)
+})
