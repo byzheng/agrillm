@@ -22,6 +22,7 @@
 #'   length equal to `length(thickness_mm)`.
 #'
 #' @examples
+#' library(agrillm)
 #' thickness <- rep(100, 10)
 #'
 #' distribute_soil_n(50, thickness)
@@ -117,3 +118,5 @@ distribute_soil_n <- function(
 
     n_per_layer
 }
+
+

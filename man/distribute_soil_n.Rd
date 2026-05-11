@@ -40,6 +40,7 @@ The function is deterministic, returns non-negative layer values,
 and conserves the supplied total nitrogen.
 }
 \examples{
+library(agrillm)
 thickness <- rep(100, 10)
 
 distribute_soil_n(50, thickness)
