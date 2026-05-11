@@ -2,10 +2,14 @@
 % Please edit documentation in R/attribute.R
 \name{.get_attribute}
 \alias{.get_attribute}
-\title{\subsection{Get custom attributes from APSIMX object}{
-}}
+\title{Get custom attributes from APSIMX object}
 \usage{
 .get_attribute(apsimx, attribute_name = NULL)
+}
+\arguments{
+\item{apsimx}{APSIM model object as returned by \code{rapsimng::read_apsimx()}.}
+
+\item{attribute_name}{Character scalar name of the attribute to retrieve. If NULL, returns all attributes under "agrillm".}
 }
 \description{
 This function retrieves custom attributes from the APSIMX object that were added using the \code{.add_attribute()} function. It allows access to metadata or assumptions stored within the APSIMX object, which can be useful for summarising assumptions in reports or for debugging purposes.

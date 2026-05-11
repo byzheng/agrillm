@@ -2,10 +2,16 @@
 % Please edit documentation in R/attribute.R
 \name{.add_attribute}
 \alias{.add_attribute}
-\title{\subsection{Add custom attributes to APSIMX object}{
-}}
+\title{Add custom attributes to APSIMX object}
 \usage{
 .add_attribute(apsimx, attribute_name, attribute_value)
+}
+\arguments{
+\item{apsimx}{APSIM model object as returned by \code{rapsimng::read_apsimx()}.}
+
+\item{attribute_name}{Character scalar name of the attribute to add.}
+
+\item{attribute_value}{List containing the attribute values to add.}
 }
 \description{
 This function allows adding custom attributes to the APSIMX object, which can be used to store additional metadata or assumptions related to the decision session. It ensures that all relevant information is encapsulated within the APSIMX object for easy access during later stages of the workflow.

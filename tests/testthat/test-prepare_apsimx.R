@@ -1,6 +1,6 @@
 test_that("prepare_apsimx writes an APSIM file with applied setup decisions", {
-    template_file <- testthat::test_path("..", "..", "inst", "templates", "wheat.apsimx")
-    met_file <- testthat::test_path("..", "..", "inst", "templates", "wagga.met")
+    template_file <- system.file("templates", "wheat.apsimx", package = "agrillm")
+    met_file <- system.file("templates", "wagga.met", package = "agrillm")
     output_file <- tempfile(fileext = ".apsimx")
     on.exit(unlink(output_file, force = TRUE), add = TRUE)
 
@@ -69,7 +69,7 @@ test_that("prepare_apsimx writes an APSIM file with applied setup decisions", {
 })
 
 test_that("prepare_apsimx rejects non-apsimx output paths", {
-    template_file <- testthat::test_path("..", "..", "inst", "templates", "wheat.apsimx")
+    template_file <- system.file("templates", "wheat.apsimx", package = "agrillm")
 
     expect_error(
         prepare_apsimx(list(), template_file, tempfile(fileext = ".txt")),
@@ -78,7 +78,7 @@ test_that("prepare_apsimx rejects non-apsimx output paths", {
 })
 
 test_that("prepare_apsimx refuses to overwrite existing output by default", {
-    template_file <- testthat::test_path("..", "..", "inst", "templates", "wheat.apsimx")
+    template_file <- system.file("templates", "wheat.apsimx", package = "agrillm")
     output_file <- tempfile(fileext = ".apsimx")
     file.create(output_file)
     on.exit(unlink(output_file, force = TRUE), add = TRUE)

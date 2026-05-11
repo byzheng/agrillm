@@ -75,7 +75,7 @@ test_that("distribute_soil_n validates inputs", {
 })
 
 test_that("apply_soil_nitrogen updates the APSIM NO3 profile for measured inputs", {
-    apsimx_path <- testthat::test_path("..", "..", "inst", "templates", "wheat.apsimx")
+    apsimx_path <- system.file("templates", "wheat.apsimx", package = "agrillm")
     apsimx <- rapsimng::read_apsimx(apsimx_path)
 
     physical_node <- rapsimng::search_path(apsimx, "[Soil].Physical")
@@ -97,7 +97,7 @@ test_that("apply_soil_nitrogen updates the APSIM NO3 profile for measured inputs
 })
 
 test_that("apply_soil_nitrogen leaves the APSIM NO3 profile unchanged for unknown inputs", {
-    apsimx_path <- testthat::test_path("..", "..", "inst", "templates", "wheat.apsimx")
+    apsimx_path <- system.file("templates", "wheat.apsimx", package = "agrillm")
     apsimx <- rapsimng::read_apsimx(apsimx_path)
 
     initial_no3 <- rapsimng::search_path(apsimx, "[Soil].NO3")
