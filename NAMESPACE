@@ -3,6 +3,7 @@
 export(agrillm_options)
 export(azure_chat)
 export(cache_apsim_cultivars)
+export(distribute_soil_n)
 export(get_cached_cultivars)
 export(llm_cache_clear)
 export(llm_cache_delete)
