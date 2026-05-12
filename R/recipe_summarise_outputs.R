@@ -9,6 +9,7 @@
 #' @param years A numeric vector of years to include in the summary (e.g., seq(1996, 2025))
 #' @param yield_fail_threshold_t_ha A numeric value representing the yield threshold (in t/ha) below which a simulation is considered a failure (e.g., 1 t/ha)
 #' @return A data frame summarising the APSIMX outputs, including mean values, quantiles, and risk of failure for each group defined by `group_vars`.
+#' @export
 recipe_summarise_outputs <- function(
     report, 
     crop,
