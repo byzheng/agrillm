@@ -8,6 +8,22 @@ execute:
   message: false
 ---
 
+```{r setup, echo=FALSE}
+suppressPackageStartupMessages({
+    library(dplyr)
+    library(ggplot2)
+})
+apsimx_file <- "{{apsimx_file}}"
+harvest_report <- recipe_read_output(apsimx_file, report = "HarvestReport")
+summary <- recipe_summarise_outputs(
+    harvest_report,
+    crop = decisions$crop$crop,
+    group_vars = c("Cultivar", "Fertilisation", "SowingDate"),
+    years = seq(1996, 2025),
+    yield_fail_threshold_t_ha = 1
+)
+```
+
 ## Decision summary
 
 {{DECISION_SUMMARY}}
