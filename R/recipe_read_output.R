@@ -23,10 +23,10 @@ recipe_read_output <- function(apsimx_file, report = "HarvestReport") {
     }
     df |>
         dplyr::mutate(
-            Clock.Today = as.Date(rlang::.data$Clock.Today),
-            SowingDOY = as.numeric(as.Date(paste(rlang::.data$SowingDate, "-2011", sep = ""), format = "%d-%b-%Y")) - 
+            Clock.Today = as.Date(.data$Clock.Today),
+            SowingDOY = as.numeric(as.Date(paste(.data$SowingDate, "-2011", sep = ""), format = "%d-%b-%Y")) - 
         as.numeric(as.Date("2010-12-31")),
-            Year = as.numeric(format(rlang::.data$Clock.Today, "%Y")),
+            Year = as.numeric(format(.data$Clock.Today, "%Y")),
         )
     
 }

@@ -53,11 +53,11 @@ recipe_summarise_outputs <- function(
     }    
     metric_cols <- all_cols[startsWith(all_cols, paste0(crop, ".")) & vapply(report, is.numeric, logical(1))]
     report |>
-        dplyr::filter(rlang::.data$Year %in% years) |>
+        dplyr::filter(.data$Year %in% years) |>
         dplyr::mutate(
             dplyr::across(
                 dplyr::all_of(phenology_cols),
-                ~ .x + rlang::.data$SowingDOY,
+                ~ .x + .data$SowingDOY,
                 .names = "{sub('DAS$', 'DOY', .col)}"
             )
 
@@ -95,7 +95,7 @@ recipe_summarise_outputs <- function(
                 .names = "p95_{.col}"
             ),
             # Grain.FrostHeatYield assumed g/m2; threshold in t/ha
-            risk_failure = mean((rlang::.data[[grain_wt_col]] / 100) < yield_fail_threshold_t_ha , na.rm = TRUE),
+            risk_failure = mean((.data[[grain_wt_col]] / 100) < yield_fail_threshold_t_ha , na.rm = TRUE),
             n_years = dplyr::n(),
             .groups = "drop"
         )
