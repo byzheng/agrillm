@@ -33,13 +33,14 @@ generate_decision_qmd <- function(
     
     if (is.null(qmd_template)) {
         qmd_template <- system.file("templates", "decision.qmd", package = "agrillm")
+        if (qmd_template == "") {
+            stop("QMD template not found in package 'agrillm'. Please ensure the package is installed correctly.")
+        }
     } else {
         stopifnot(is.character(qmd_template), length(qmd_template) == 1, file.exists(qmd_template))
     }
 
-    if (qmd_template == "") {
-        stop("QMD template not found in package 'agrillm'. Please ensure the package is installed correctly.")
-    }
+    
     if (!use_ai) {
         stop("Non-AI generation not implemented yet. Please set use_ai = TRUE.")
     }
@@ -83,7 +84,7 @@ generate_decision_qmd <- function(
     qmd_template <- readLines(qmd_template, warn = FALSE) |> paste(collapse = "\n")
     decision_str <- .format_list_for_ai(decisions)
     summary_cols <- colnames(summary) |> paste(collapse = ", ")
-    recipe_catalogue <- agrillm::recipe_registry() |> .format_list_for_ai()
+    recipe_catalogue <- recipe_registry() |> .format_list_for_ai()
     prompt <- glue::glue("
 You are assisting with the generation of a Quarto (.qmd) decision report.
 
@@ -150,6 +151,6 @@ Rules:
 - make sure check chunk separators (```{r} ... ```) are correct, do not use alternative separators (e.g. ````{r} ... ````
 ")
 
-    response <- agrillm::llm_chat(prompt, use_cache = use_cache)
+    response <- llm_chat(prompt, use_cache = use_cache)
     reply <- tidyllm::get_reply(response) 
 }
