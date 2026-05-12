@@ -101,3 +101,12 @@ recipe_summarise_outputs <- function(
             .groups = "drop"
         )
 }
+
+
+.recipe_registry_env$recipe_summarise_outputs <- list(
+    name    = "recipe_summarise_outputs",
+    category = "general",
+    purpose = "Summarise multi-year APSIM outputs into decision metrics",
+    inputs  = "APSIM output data, grouping variables, year range",
+    outputs = "Summary data frame with means, quantiles, and variability metrics"
+)

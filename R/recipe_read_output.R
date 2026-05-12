@@ -30,3 +30,12 @@ recipe_read_output <- function(apsimx_file, report = "HarvestReport") {
         )
     
 }
+
+
+.recipe_registry_env$recipe_read_output <- list(
+    name    = "recipe_read_output",
+    category = "general",
+    purpose = "Read and validate APSIM output reports",
+    inputs  = "APSIMX file path, report name",
+    outputs = "Validated data frame of APSIM outputs"
+)
