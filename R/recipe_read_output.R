@@ -15,9 +15,6 @@ recipe_read_output <- function(apsimx_file, report = "HarvestReport") {
     if (!tibble::has_name(df, "SowingDate")) {
         stop("Expected 'SowingDate' column not found in APSIM output. Please check the model configuration.")
     }
-    if (!tibble::has_name(df, "Wheat.SowingDate")) {
-        stop("Expected 'Wheat.SowingDate' column not found in APSIM output. Please check the model configuration.")
-    }
     if (!tibble::has_name(df, "Cultivar")) {
         stop("Expected 'Cultivar' column not found in APSIM output. Please check the model configuration.")
     }
@@ -26,11 +23,10 @@ recipe_read_output <- function(apsimx_file, report = "HarvestReport") {
     }
     df |>
         dplyr::mutate(
-            Clock.Today = as.Date(Clock.Today),
-            Wheat.SowingDate = as.Date(Wheat.SowingDate),
-            SowingDOY = as.numeric(as.Date(paste(SowingDate, "-2011", sep = ""), format = "%d-%b-%Y")) - 
+            Clock.Today = as.Date(rlang::.data$Clock.Today),
+            SowingDOY = as.numeric(as.Date(paste(rlang::.data$SowingDate, "-2011", sep = ""), format = "%d-%b-%Y")) - 
         as.numeric(as.Date("2010-12-31")),
-            Year = as.numeric(format(Clock.Today, "%Y")),
+            Year = as.numeric(format(rlang::.data$Clock.Today, "%Y")),
         )
     
 }

@@ -1,0 +1,43 @@
+
+---
+title: "{{TITLE}}"
+format: html
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Decision summary
+
+{{DECISION_SUMMARY}}
+
+## Decision context and scope
+
+{{DECISION_CONTEXT}}
+
+## Assumptions
+
+{{ASSUMPTIONS}}
+
+## Evidence used in this decision
+
+{{EVIDENCE_SUMMARY}}
+
+## Analysis
+
+### Analysis question 1
+
+```{r fig-1}
+{{FIGURE_1}}
+````
+
+{{FIGURE_1_INTERPRETATION}}
+
+## Decision implications
+
+{{DECISION_IMPLICATIONS}}
+
+## Decision status
+
+{{DECISION_STATUS}}

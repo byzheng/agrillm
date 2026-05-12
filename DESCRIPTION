@@ -17,12 +17,14 @@ Imports:
     tidyllm,
     jsonlite,
     rapsimng,
-    utils
+    utils,
+    tibble,
+    dplyr,
+    rlang
 Remotes: 
     byzheng/rapsimng,
     irudnyts/openai
 Suggests: 
     testthat (>= 3.0.0),
-    ggplot2,
-    dplyr
+    ggplot2
 Config/roxygen2/version: 8.0.0
