@@ -1,9 +1,8 @@
-
 ---
 title: "{{TITLE}}"
 format: html
 execute:
-  echo: true
+  echo: false
   warning: false
   message: false
 ---
@@ -12,12 +11,16 @@ execute:
 suppressPackageStartupMessages({
     library(dplyr)
     library(ggplot2)
+    library(agrillm)
 })
-apsimx_file <- "{{apsimx_file}}"
+apsimx_file <- "{{apsimx_file}}" 
+crop <- "{{crop}}"
+apsimx_file <- here::here(apsimx_file)
+
 harvest_report <- recipe_read_output(apsimx_file, report = "HarvestReport")
 summary <- recipe_summarise_outputs(
     harvest_report,
-    crop = decisions$crop$crop,
+    crop = crop,
     group_vars = c("Cultivar", "Fertilisation", "SowingDate"),
     years = seq(1996, 2025),
     yield_fail_threshold_t_ha = 1

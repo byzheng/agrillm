@@ -20,7 +20,9 @@ Imports:
     utils,
     tibble,
     dplyr,
-    rlang
+    rlang,
+    glue,
+    quarto
 Remotes: 
     byzheng/rapsimng,
     irudnyts/openai
