@@ -26,7 +26,7 @@ list and records that assumption under \code{attr(x, "agrillm")$cultivar}.
 }
 \examples{
 \dontrun{
-apsimx_path <- system.file("templates", "wheat.apsimx", package = "agrillm")
+apsimx_path <- system.file("examples", "wheat.apsimx", package = "agrillm")
 apsimx <- rapsimng::read_apsimx(apsimx_path)
 cultivar <- list(cultivar = "scepter")
 updated <- apply_cultivar(apsimx, crop = "wheat", cultivar = cultivar)

@@ -1,5 +1,5 @@
 template_apsimx <- function() {
-    apsimx_path <- system.file("templates", "wheat.apsimx", package = "agrillm")
+    apsimx_path <- system.file("examples", "wheat.apsimx", package = "agrillm")
     rapsimng::read_apsimx(apsimx_path)
 }
 
@@ -121,7 +121,7 @@ test_that("apply_clock updates APSIM clock fields and evidence", {
 
 test_that("apply_weather updates the APSIM weather file reference", {
     apsimx <- template_apsimx()
-    met_path <- system.file("templates", "wagga.met", package = "agrillm")
+    met_path <- system.file("examples", "wagga.met", package = "agrillm")
 
     updated <- apply_weather(apsimx, met_path)
     weather_node <- rapsimng::search_path(updated, "[Weather]")

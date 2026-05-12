@@ -33,7 +33,7 @@ nitrogen, and fertilisation nitrogen in sequence.
 \dontrun{
 decisions <- list(
   location = list(evidence = list(
-    weather = list(file = system.file("templates", "wagga.met", package = "agrillm")),
+    weather = list(file = system.file("examples", "wagga.met", package = "agrillm")),
     soil = list(file = "path/to/soil.apsimx")
   )),
   crop = list(crop = "wheat"),
@@ -46,7 +46,7 @@ decisions <- list(
 
 prepare_apsimx(
   decisions = decisions,
-  template_file = system.file("templates", "wheat.apsimx", package = "agrillm"),
+  template_file = system.file("examples", "wheat.apsimx", package = "agrillm"),
   output_file = tempfile(fileext = ".apsimx"),
   overwrite = TRUE
 )

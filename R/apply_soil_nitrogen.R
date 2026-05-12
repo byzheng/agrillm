@@ -18,7 +18,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' apsimx_path <- system.file("templates", "wheat.apsimx", package = "agrillm")
+#' apsimx_path <- system.file("examples", "wheat.apsimx", package = "agrillm")
 #' apsimx <- rapsimng::read_apsimx(apsimx_path)
 #' soil_n <- resolve_soil_nitrogen("50 kg/ha", use_ai = FALSE)
 #' updated <- apply_soil_nitrogen(apsimx, soil_n)

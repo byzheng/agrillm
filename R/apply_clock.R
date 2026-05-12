@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' apsimx_path <- system.file("templates", "wheat.apsimx", package = "agrillm")
+#' apsimx_path <- system.file("examples", "wheat.apsimx", package = "agrillm")
 #' apsimx <- rapsimng::read_apsimx(apsimx_path)
 #' updated <- apply_clock(apsimx, start = "2012-01-01T00:00:00", end = "2013-12-31T00:00:00")
 #' attr(updated, "agrillm")$clock

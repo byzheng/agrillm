@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' apsimx_path <- system.file("templates", "wheat.apsimx", package = "agrillm")
+#' apsimx_path <- system.file("examples", "wheat.apsimx", package = "agrillm")
 #' apsimx <- rapsimng::read_apsimx(apsimx_path)
 #' sowing <- list(start = "01-may", end = "07-may")
 #' updated <- apply_sowing(apsimx, sowing)

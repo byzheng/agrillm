@@ -20,8 +20,8 @@ Updates the \verb{[Weather]} node in an APSIM Next Generation model so the
 }
 \examples{
 \dontrun{
-apsimx_path <- system.file("templates", "wheat.apsimx", package = "agrillm")
-met_path <- system.file("templates", "wagga.met", package = "agrillm")
+apsimx_path <- system.file("examples", "wheat.apsimx", package = "agrillm")
+met_path <- system.file("examples", "wagga.met", package = "agrillm")
 apsimx <- rapsimng::read_apsimx(apsimx_path)
 updated <- apply_weather(apsimx, met_path)
 }

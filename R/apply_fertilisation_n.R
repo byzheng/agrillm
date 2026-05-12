@@ -14,7 +14,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' apsimx_path <- system.file("templates", "wheat.apsimx", package = "agrillm")
+#' apsimx_path <- system.file("examples", "wheat.apsimx", package = "agrillm")
 #' apsimx <- rapsimng::read_apsimx(apsimx_path)
 #' fert_n <- list(value = 80)
 #' updated <- apply_fertilisation_n(apsimx, fert_n)
