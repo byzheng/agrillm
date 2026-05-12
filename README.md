@@ -7,9 +7,7 @@
 
 # agrillm
 
-## Overview
-
-**agrillm** provides tools and utilities for applying Large Language Models (LLMs) to agricultural research and practice. 
+**agrillm** is a system that turns informal decision questions into reproducible evidence‑based answers.
 
 ## Installation
 
