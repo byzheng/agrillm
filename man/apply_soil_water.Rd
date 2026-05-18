@@ -11,7 +11,8 @@ apply_soil_water(apsimx, soil_water)
 
 \item{soil_water}{List describing resolved soil water input, typically from
 \code{\link[=resolve_soil_water]{resolve_soil_water()}}. Supported inputs currently include a \code{fraction}
-field between 0 and 1.}
+field between 0 and 1. If fraction is missing or invalid, the function
+assumes the full soil profile is at DUL.}
 }
 \value{
 A modified APSIM model object with updated soil water state.
