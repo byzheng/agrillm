@@ -6,3 +6,4 @@
 .quarto
 .agrillm
 docs
+*.db

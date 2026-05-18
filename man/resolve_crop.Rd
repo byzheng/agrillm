@@ -14,11 +14,23 @@ resolve_crop(crop_input, use_ai = TRUE, use_cache = TRUE)
 \item{use_cache}{Logical. Whether to use caching for AI responses. Default: TRUE.}
 }
 \value{
-A list with elements: crop (resolved crop name), source ("direct_match", "heuristic", or "ai_resolution"), raw_input (original input).
+A list with elements: crop (resolved crop name), source ("direct_match", "heuristic", or "ai_resolution"), raw_input (original input), assumption (description of how the resolution was made).
 }
 \description{
 This function attempts to map a user-provided crop name or synonym to a supported crop name
 using exact/synonym matching, heuristics, and optionally an LLM (AI) fallback.
+}
+\details{
+The function first checks for exact matches against a predefined list of supported crops and their synonyms. If no match is found, it applies simple heuristics (e.g., substring matching). If still unresolved and \code{use_ai} is TRUE, it constructs a prompt to an LLM to attempt resolution. The output includes the resolved crop name, the source of the resolution, the original input, and any assumptions made.
+
+The output is a list with the following fields:
+
+list(
+crop = "wheat" | "known" | "categorical" | "unknown",
+source = "direct_match" | "heuristic" | "ai_resolution" | "unresolvable",
+raw_input = "wheat",
+assumptions = NULL
+)
 }
 \examples{
 resolve_crop("wheat")

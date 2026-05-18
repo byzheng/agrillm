@@ -3,11 +3,24 @@
 #'
 #' This function attempts to map a user-provided crop name or synonym to a supported crop name
 #' using exact/synonym matching, heuristics, and optionally an LLM (AI) fallback.
+#' 
+#' @details 
+#' 
+#' The function first checks for exact matches against a predefined list of supported crops and their synonyms. If no match is found, it applies simple heuristics (e.g., substring matching). If still unresolved and `use_ai` is TRUE, it constructs a prompt to an LLM to attempt resolution. The output includes the resolved crop name, the source of the resolution, the original input, and any assumptions made.
+#' 
+#' The output is a list with the following fields:
+#' 
+#' list(
+#'    crop = "wheat" | "known" | "categorical" | "unknown",
+#'    source = "direct_match" | "heuristic" | "ai_resolution" | "unresolvable",
+#'    raw_input = "wheat",
+#'    assumptions = NULL
+#' )
 #'
 #' @param crop_input Character string. The crop name or description to resolve.
 #' @param use_ai Logical. Whether to use AI fallback if no match is found. Default: TRUE.
 #' @param use_cache Logical. Whether to use caching for AI responses. Default: TRUE.
-#' @return A list with elements: crop (resolved crop name), source ("direct_match", "heuristic", or "ai_resolution"), raw_input (original input).
+#' @return A list with elements: crop (resolved crop name), source ("direct_match", "heuristic", or "ai_resolution"), raw_input (original input), assumption (description of how the resolution was made).
 #' @examples
 #' resolve_crop("wheat")
 #' resolve_crop("Winter Wheat")
@@ -31,7 +44,8 @@ resolve_crop <- function(crop_input, use_ai = TRUE, use_cache = TRUE) {
             return(list(
                 crop = crop,
                 source = "direct_match",
-                raw_input = crop_input
+                raw_input = crop_input,
+                assumption = paste0("matched against synonyms: ", paste(SUPPORTED_CROPS[[crop]], collapse = ", "))
             ))
         }
     }
@@ -41,7 +55,12 @@ resolve_crop <- function(crop_input, use_ai = TRUE, use_cache = TRUE) {
     for (crop in raw_crops) {
         for (syn in tolower(SUPPORTED_CROPS[[crop]])) {
             if (grepl(syn, raw)) {
-                return(list(crop = crop, source = "heuristic", raw_input = crop_input))
+                return(list(
+                    crop = crop,
+                    source = "heuristic",
+                    raw_input = crop_input,
+                    assumption = paste0("matched against synonyms: ", paste(SUPPORTED_CROPS[[crop]], collapse = ", "))
+                ))
             }
         }
     }
@@ -52,7 +71,8 @@ resolve_crop <- function(crop_input, use_ai = TRUE, use_cache = TRUE) {
         return(list(
             crop = "unknown",
             source = "unresolvable",
-            raw_input = crop_input
+            raw_input = crop_input,
+            assumption = "no match found and AI fallback disabled"
         )) 
     }
     message("No direct match for crop '", crop_input, "'. Using AI to attempt resolution...")
@@ -61,7 +81,8 @@ resolve_crop <- function(crop_input, use_ai = TRUE, use_cache = TRUE) {
         list(
             crop = ai_crop,
             source = "ai_resolution",
-            raw_input = crop_input
+            raw_input = crop_input,
+            assumption = "resolved using AI fallback"
         )
     )
 
