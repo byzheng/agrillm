@@ -59,8 +59,12 @@ prepare_apsimx <- function(
     apsimx <- rapsimng::read_apsimx(template_file)
     apsimx <- .add_attribute(apsimx, "location", decisions$location)
     apsimx <- apply_clock(apsimx)
-    apsimx <- apply_weather(apsimx, decisions$location$evidence$weather$file)
-    apsimx <- apply_soil(apsimx, decisions$location$evidence$soil$file)
+    if (!is.null(decisions$location$evidence$weather$file) && file.exists(decisions$location$evidence$weather$file)) {
+        apsimx <- apply_weather(apsimx, decisions$location$evidence$weather$file)
+    }
+    if (!is.null(decisions$location$evidence$soil$file) && file.exists(decisions$location$evidence$soil$file)) {
+        apsimx <- apply_soil(apsimx, decisions$location$evidence$soil$file)
+    }
     apsimx <- apply_cultivar(apsimx, decisions$crop$crop, decisions$cultivar)
     apsimx <- apply_sowing(apsimx, decisions$sowing)
     apsimx <- apply_soil_water(apsimx, decisions$soil_water)

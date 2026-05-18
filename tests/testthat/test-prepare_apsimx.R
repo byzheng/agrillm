@@ -7,8 +7,7 @@ test_that("prepare_apsimx writes an APSIM file with applied setup decisions", {
     decisions <- list(
         location = list(
             evidence = list(
-                weather = list(file = met_file),
-                soil = list(file = template_file)
+                weather = list(file = met_file)
             )
         ),
         crop = list(crop = "wheat"),
@@ -19,53 +18,83 @@ test_that("prepare_apsimx writes an APSIM file with applied setup decisions", {
         fert_nitrogen = list(value = 80)
     )
 
-    with_mocked_bindings(
-        apply_soil = function(apsimx, file) {
-            expect_equal(normalizePath(file, winslash = "/", mustWork = TRUE),
-                         normalizePath(template_file, winslash = "/", mustWork = TRUE))
-            apsimx
-        },
-        {
-            result <- prepare_apsimx(
-                decisions = decisions,
-                template_file = template_file,
-                output_file = output_file,
-                overwrite = TRUE
-            )
-
-            expect_equal(result, output_file)
-            expect_true(file.exists(output_file))
-
-            apsimx <- rapsimng::read_apsimx(output_file)
-            clock_node <- rapsimng::search_path(apsimx, "[Clock]")
-            weather_node <- rapsimng::search_path(apsimx, "[Weather]")
-            cultivar_node <- rapsimng::search_path(apsimx, "[Factors].Permutation.Cultivar")
-            sowing_node <- rapsimng::search_path(apsimx, "[Factors].Permutation.SowingDate")
-            fertilisation_node <- rapsimng::search_path(apsimx, "[Factors].Permutation.Fertilisation")
-            water_node <- rapsimng::search_path(apsimx, "[Soil].Water")
-            nitrogen_node <- rapsimng::search_path(apsimx, "[Soil].NO3")
-            physical_node <- rapsimng::search_path(apsimx, "[Soil].Physical")
-
-            thickness <- unlist(physical_node$node$Thickness) |> as.numeric()
-            dul <- unlist(physical_node$node$DUL) |> as.numeric()
-            ll15 <- unlist(physical_node$node$LL15) |> as.numeric()
-            expected_sw <- ll15 + 0.5 * (dul - ll15)
-            expected_no3 <- distribute_soil_n(50, thickness)
-
-            expect_equal(clock_node$node$Start, "1976-01-01T00:00:00")
-            expect_equal(clock_node$node$End, "2025-12-31T00:00:00")
-            expect_equal(weather_node$node$FileName, "wagga.met")
-            expect_equal(cultivar_node$node$Specification, "[Sowing].Script.CultivarName=scepter")
-            expect_equal(sowing_node$node$Specification, "[Sowing].Script.SowDate=01-may, 04-may, 07-may")
-            expect_equal(fertilisation_node$node$Specification, "[SowingFertiliser].Script.Amount=80")
-            expect_equal(unlist(water_node$node$InitialValues) |> as.numeric(), expected_sw)
-            expect_equal(
-                unlist(nitrogen_node$node$InitialValues) |> as.numeric(),
-                expected_no3,
-                tolerance = 1e-4
-            )
-        }
+    result <- prepare_apsimx(
+        decisions = decisions,
+        template_file = template_file,
+        output_file = output_file,
+        overwrite = TRUE
     )
+
+    expect_equal(result, output_file)
+    expect_true(file.exists(output_file))
+
+    apsimx <- rapsimng::read_apsimx(output_file)
+    clock_node <- rapsimng::search_path(apsimx, "[Clock]")
+    weather_node <- rapsimng::search_path(apsimx, "[Weather]")
+    cultivar_node <- rapsimng::search_path(apsimx, "[Factors].Permutation.Cultivar")
+    sowing_node <- rapsimng::search_path(apsimx, "[Factors].Permutation.SowingDate")
+    fertilisation_node <- rapsimng::search_path(apsimx, "[Factors].Permutation.Fertilisation")
+    water_node <- rapsimng::search_path(apsimx, "[Soil].Water")
+    nitrogen_node <- rapsimng::search_path(apsimx, "[Soil].NO3")
+    physical_node <- rapsimng::search_path(apsimx, "[Soil].Physical")
+
+    thickness <- unlist(physical_node$node$Thickness) |> as.numeric()
+    dul <- unlist(physical_node$node$DUL) |> as.numeric()
+    ll15 <- unlist(physical_node$node$LL15) |> as.numeric()
+    expected_sw <- ll15 + 0.5 * (dul - ll15)
+    expected_no3 <- distribute_soil_n(50, thickness)
+
+    expect_equal(clock_node$node$Start, "1976-01-01T00:00:00")
+    expect_equal(clock_node$node$End, "2025-12-31T00:00:00")
+    expect_equal(weather_node$node$FileName, "wagga.met")
+    expect_equal(cultivar_node$node$Specification, "[Sowing].Script.CultivarName=scepter")
+    expect_equal(sowing_node$node$Specification, "[Sowing].Script.SowDate=01-may, 04-may, 07-may")
+    expect_equal(fertilisation_node$node$Specification, "[SowingFertiliser].Script.Amount=80")
+    expect_equal(unlist(water_node$node$InitialValues) |> as.numeric(), expected_sw)
+    expect_equal(
+        unlist(nitrogen_node$node$InitialValues) |> as.numeric(),
+        expected_no3,
+        tolerance = 1e-4
+    )
+})
+
+test_that("prepare_apsimx writes Soil.Water InitialValues into a temp output file", {
+    template_file <- system.file("examples", "wheat.apsimx", package = "agrillm")
+    met_file <- system.file("examples", "wagga.met", package = "agrillm")
+    output_file <- file.path(tempdir(), "prepare-apsimx-soil-water.apsimx")
+    on.exit(unlink(output_file, force = TRUE), add = TRUE)
+
+    decisions <- list(
+        location = list(
+            evidence = list(
+                weather = list(file = met_file)
+            )
+        ),
+        crop = list(crop = "wheat"),
+        cultivar = list(cultivar = "scepter"),
+        sowing = list(start = "01-may", end = "07-may"),
+        soil_water = list(fraction = 0.5),
+        soil_nitrogen = list(value = 50),
+        fert_nitrogen = list(value = 80)
+    )
+
+    result <- prepare_apsimx(
+        decisions = decisions,
+        template_file = template_file,
+        output_file = output_file,
+        overwrite = TRUE
+    )
+
+    expect_equal(result, output_file)
+    expect_true(file.exists(output_file))
+
+    apsimx <- rapsimng::read_apsimx(output_file)
+    water_node <- rapsimng::search_path(apsimx, "[Soil].Water")
+    initial_values <- unlist(water_node$node$InitialValues) |> as.numeric()
+
+    expect_true(!is.null(water_node$node$InitialValues))
+    expect_length(initial_values, length(unlist(water_node$node$Thickness)))
+    expect_true(all(is.finite(initial_values)))
 })
 
 test_that("prepare_apsimx rejects non-apsimx output paths", {
