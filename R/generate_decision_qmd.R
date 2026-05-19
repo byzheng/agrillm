@@ -87,6 +87,9 @@ generate_decision_qmd <- function(
     stopifnot(is.list(decisions))
     stopifnot(is.character(apsimx_file), length(apsimx_file) == 1, file.exists(apsimx_file))
     stopifnot(is.logical(use_cache), length(use_cache) == 1)
+    stopifnot(is.character(qmd_doc), length(qmd_doc) >= 1)
+    
+    qmd_doc <- paste(qmd_doc, collapse = "\n")
 
     decision_str <- .format_list_for_ai(decisions)
     prompt <- glue::glue("
@@ -115,7 +118,9 @@ You MAY:
 
 
 TASK:
+- Return all contents of original QMD document with placeholders replaced by narrative text
 - Replace each HTML comment placeholder <!-- TEXT_xxx --> with a concise paragraph (1-3 sentences)
+- Use the text in the html comment as a guide for the content of each paragraph
 - Each paragraph must be based ONLY on the visible content in the same section
 - Do NOT use information outside that section
 - Each replacement must be independent
@@ -139,20 +144,6 @@ Your task is to replace ONLY the placeholders with narrative text.
 
 ----------------------
 {qmd_doc}
-
-----------------------
-DECISION OBJECT
-----------------------
-
-{decision_str}
-
-Summarise key elements including:
-
-- location
-- crop
-- soil nitrogen & water
-- fertilisation nitrogen
-- decision focus
 
 ")
 
