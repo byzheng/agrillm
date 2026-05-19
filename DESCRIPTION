@@ -18,8 +18,7 @@ Imports:
     jsonlite,
     rapsimng,
     utils,
-    tibble,
-    dplyr,
+    rapsimng.decide,
     rlang,
     glue,
     quarto
@@ -28,5 +27,6 @@ Remotes:
     irudnyts/openai
 Suggests: 
     testthat (>= 3.0.0),
-    ggplot2
+    ggplot2,
+    dplyr
 Config/roxygen2/version: 8.0.0

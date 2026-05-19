@@ -7,9 +7,7 @@
 #' @param apsimx_file Character scalar path to the APSIMX file used in the analysis. This will be referenced in the QMD report.
 #' @param decisions List of resolved decision objects containing the decision context, including crop, location
 #' metadata, soil conditions, and other relevant information that should be included in the report.
-#' @param summary Data frame summarising the APSIMX outputs, which will be available in the QMD environment for generating narrative and code. This should include key metrics and results that the report will discuss.
 #' @param qmd_file Character scalar path where the generated QMD file will be saved. The function will write the generated content to this file.
-#' @param qmd_template Character scalar path to the QMD template file. If `NULL` (default), a built-in template from the package will be used. The template should contain placeholders for dynamic content and follow the expected structure for the AI to fill in.
 #' @param use_ai Logical scalar indicating whether to use AI for generating the QMD content
 #' (typically `TRUE`). If `FALSE`, the function will not generate content and will currently throw an error, as non-AI generation is not implemented yet.
 #' @param use_cache Logical scalar indicating whether to use cached AI responses if available. This can speed up generation if the same prompt has been used before.
@@ -18,38 +16,52 @@
 generate_decision_qmd <- function(
     apsimx_file,
     decisions,
-    summary, 
     qmd_file,
-    qmd_template = NULL,
     use_ai = TRUE,
     use_cache = TRUE
 ) {
     stopifnot(is.list(decisions))
-    stopifnot(is.data.frame(summary))
     stopifnot(is.character(qmd_file), length(qmd_file) == 1)
     stopifnot(is.character(apsimx_file), length(apsimx_file) == 1, file.exists(apsimx_file))
     stopifnot(is.logical(use_ai), length(use_ai) == 1)
     stopifnot(is.logical(use_cache), length(use_cache) == 1)
     
-    if (is.null(qmd_template)) {
-        qmd_template <- system.file("templates", "decision.qmd", package = "agrillm")
-        if (qmd_template == "") {
-            stop("QMD template not found in package 'agrillm'. Please ensure the package is installed correctly.")
-        }
-    } else {
-        stopifnot(is.character(qmd_template), length(qmd_template) == 1, file.exists(qmd_template))
-    }
-
-    
     if (!use_ai) {
         stop("Non-AI generation not implemented yet. Please set use_ai = TRUE.")
     }
+    context <- list(
+        meta = list(
+            source = apsimx_file,
+            report = "HarvestReport",
+            title = "Cultivar Suitability Report",
+            author = "Bangyou Zheng",
+            date = Sys.Date(),
+            notes = c("This is a cultivar suitability report generated using APSIM NG and AI.")
+        ),
+        vars = list(
+            cultivar_col = "Cultivar",
+            year_col = "Year",
+            sowing_col = "SowingDate",
+            yield_col = "Wheat.FrostHeatDamageFunctions.FrostHeatYield",
+            years = seq(1996, 2025)
+        )
+    )
+    
+    criteria <- list(failure = list(yield_threshold = 1.0))
+    options <- list()
+
+    apsim_output <- rapsimng.decide::read_output(
+        apsimx_file, 
+        "HarvestReport",
+        years = context$vars$years
+    )
+
+    qmd_doc <- rapsimng.decide::document(apsim_output, "cultivar", context, criteria, options, simplify = TRUE)
 
     reply <- .generate_decision_qmd_with_ai(
         apsimx_file,
         decisions,
-        summary,
-        qmd_template,
+        qmd_doc,
         use_cache = use_cache
     )
     writeLines(reply, con = qmd_file)
@@ -63,28 +75,20 @@ generate_decision_qmd <- function(
 #' 
 #' @param apsimx_file Character scalar path to the APSIMX file used in the analysis.
 #' @param decisions List of resolved decision objects containing the decision context.
-#' @param summary Data frame summarising the APSIMX outputs, which will be available
-#' in the QMD environment for generating narrative and code.
-#' @param qmd_template Character scalar path to the QMD template file.
+#' @param qmd_doc Character scalar containing the QMD document template.
 #' @param use_cache Logical scalar indicating whether to use cached AI responses if available.
 #' @return Character scalar containing the generated QMD content.
 .generate_decision_qmd_with_ai <- function(
     apsimx_file,
     decisions,
-    summary,
-    qmd_template,
+    qmd_doc,
     use_cache = TRUE
 ) {
     stopifnot(is.list(decisions))
-    stopifnot(is.data.frame(summary))
-    stopifnot(is.character(qmd_template), length(qmd_template) == 1, file.exists(qmd_template))
     stopifnot(is.character(apsimx_file), length(apsimx_file) == 1, file.exists(apsimx_file))
     stopifnot(is.logical(use_cache), length(use_cache) == 1)
 
-    qmd_template <- readLines(qmd_template, warn = FALSE) |> paste(collapse = "\n")
     decision_str <- .format_list_for_ai(decisions)
-    summary_cols <- colnames(summary) |> paste(collapse = ", ")
-    recipe_catalogue <- recipe_registry() |> .format_list_for_ai()
     prompt <- glue::glue("
 You are assisting with the generation of a Quarto (.qmd) decision report.
 
@@ -92,63 +96,64 @@ Your role is to interpret a structured decision context and deterministic analys
 and to generate clear, auditable narrative and code for reporting purposes.
 
 STRICT CONSTRAINTS:
+
 - Do NOT perform calculations
 - Do NOT generate new data
 - Do NOT introduce new assumptions
 - Do NOT modify analysis logic
+- Do NOT restructure the document
+- Do NOT modify R code chunks
+- Do NOT make or imply decisions or recommendations
 - Do NOT invent thresholds or agronomic rules
-- Do NOT restructure the template
+
 
 You MAY:
-- summarise and explain existing results
-- describe patterns, trends, and trade-offs
-- generate Quarto markdown text
-- generate R plotting code using ONLY existing objects
-- generate inline R code (`r ...`) using ONLY existing objects to reference specific values
-- communicate uncertainty and limitations
+
+- describe patterns visible in tables and figures
+- summarise key observations
+- communicate variability and risk in neutral terms
+
+
+TASK:
+- Replace each HTML comment placeholder <!-- TEXT_xxx --> with a concise paragraph (1-3 sentences)
+- Each paragraph must be based ONLY on the visible content in the same section
+- Do NOT use information outside that section
+- Each replacement must be independent
+
+STYLE:
+- Use clear, concise language
+- Avoid generic phrases
+- Refer to values or trends when visible
+
 
 ----------------------
-QMD TEMPLATE
+QMD DOC TEMPLATE
+
+The following QMD document is already fully structured and contains:
+- deterministic text
+- tables
+- figures
+- HTML comment placeholders for narrative injection
+
+Your task is to replace ONLY the placeholders with narrative text.
+
 ----------------------
-{qmd_template}
-
-The following keywords are used in the template and should be replaced with actual content:
-
-- {{apsimx_file}} as {apsimx_file}
-- {{crop}} as {decisions$crop$crop}
+{qmd_doc}
 
 ----------------------
-DECISION OBJECT (JSON)
+DECISION OBJECT
 ----------------------
 
 {decision_str}
 
 Summarise key elements including:
+
 - location
 - crop
 - soil nitrogen & water
 - fertilisation nitrogen
 - decision focus
 
-----------------------
-AVAILABLE EVIDENCE
-----------------------
-The following R objects are available in the QMD environment:
-
-- summary: data.frame with {nrow(summary)} rows and columns: {summary_cols}
-
-Use R code (not numbers in text) to access values and generate plots.
-
-----------------------
-AVAILABLE RECIPES
-----------------------
-
-{recipe_catalogue}
-
-Rules:
-- Prefer R code using existing objects
-- Return ONLY the complete QMD document
-- make sure check chunk separators (```{r} ... ```) are correct, do not use alternative separators (e.g. ````{r} ... ````
 ")
 
     response <- llm_chat(prompt, use_cache = use_cache)

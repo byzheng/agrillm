@@ -7,8 +7,7 @@
 .generate_decision_qmd_with_ai(
   apsimx_file,
   decisions,
-  summary,
-  qmd_template,
+  qmd_doc,
   use_cache = TRUE
 )
 }
@@ -17,10 +16,7 @@
 
 \item{decisions}{List of resolved decision objects containing the decision context.}
 
-\item{summary}{Data frame summarising the APSIMX outputs, which will be available
-in the QMD environment for generating narrative and code.}
-
-\item{qmd_template}{Character scalar path to the QMD template file.}
+\item{qmd_doc}{Character scalar containing the QMD document template.}
 
 \item{use_cache}{Logical scalar indicating whether to use cached AI responses if available.}
 }

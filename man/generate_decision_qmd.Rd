@@ -7,9 +7,7 @@
 generate_decision_qmd(
   apsimx_file,
   decisions,
-  summary,
   qmd_file,
-  qmd_template = NULL,
   use_ai = TRUE,
   use_cache = TRUE
 )
@@ -20,11 +18,7 @@ generate_decision_qmd(
 \item{decisions}{List of resolved decision objects containing the decision context, including crop, location
 metadata, soil conditions, and other relevant information that should be included in the report.}
 
-\item{summary}{Data frame summarising the APSIMX outputs, which will be available in the QMD environment for generating narrative and code. This should include key metrics and results that the report will discuss.}
-
 \item{qmd_file}{Character scalar path where the generated QMD file will be saved. The function will write the generated content to this file.}
-
-\item{qmd_template}{Character scalar path to the QMD template file. If \code{NULL} (default), a built-in template from the package will be used. The template should contain placeholders for dynamic content and follow the expected structure for the AI to fill in.}
 
 \item{use_ai}{Logical scalar indicating whether to use AI for generating the QMD content
 (typically \code{TRUE}). If \code{FALSE}, the function will not generate content and will currently throw an error, as non-AI generation is not implemented yet.}
