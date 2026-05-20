@@ -42,8 +42,12 @@ generate_decision_qmd <- function(
             cultivar_col = "Cultivar",
             year_col = "Year",
             sowing_col = "SowingDate",
+            flower_col = "Wheat.Phenology.FloweringDAS",
             yield_col = "Wheat.FrostHeatDamageFunctions.FrostHeatYield",
-            years = seq(1996, 2025)
+            frost_reduction_col = "Wheat.FrostHeatDamageFunctions.CumulativeFrostReductionRatio",
+            heat_reduction_col = "Wheat.FrostHeatDamageFunctions.CumulativeHeatReductionRatio",
+            frost_event_col = "Wheat.FrostHeatDamageFunctions.FrostEventNumber",
+            heat_event_col = "Wheat.FrostHeatDamageFunctions.HeatEventNumber"
         )
     )
     
@@ -60,12 +64,65 @@ generate_decision_qmd <- function(
 
     reply <- .generate_decision_qmd_with_ai(
         apsimx_file,
-        decisions,
         qmd_doc,
         use_cache = use_cache
     )
+    reply <- .inject_package_qmd_css(reply)
     writeLines(reply, con = qmd_file)
     invisible(qmd_file)
+}
+
+
+.inject_package_qmd_css <- function(qmd_text) {
+    stopifnot(is.character(qmd_text), length(qmd_text) >= 1)
+
+    qmd_text <- paste(qmd_text, collapse = "\n")
+    if (grepl("agrillm-ai-text-style", qmd_text, fixed = TRUE)) {
+        return(qmd_text)
+    }
+
+    qmd_lines <- strsplit(qmd_text, "\n", fixed = TRUE)[[1]]
+    if (length(qmd_lines) < 3 || !identical(qmd_lines[[1]], "---")) {
+        return(qmd_text)
+    }
+
+    header_end <- which(qmd_lines[-1] == "---")
+    if (length(header_end) == 0) {
+        return(qmd_text)
+    }
+    header_end <- header_end[[1]] + 1
+
+    css_file <- .find_package_qmd_css()
+    if (!nzchar(css_file) || !file.exists(css_file)) {
+        return(qmd_text)
+    }
+
+    css_lines <- readLines(css_file, warn = FALSE)
+    css_block <- c(
+        "include-in-header:",
+        "  text: |",
+        "    <style id='agrillm-ai-text-style'>",
+        paste0("    ", css_lines),
+        "    </style>"
+    )
+
+    qmd_lines <- append(qmd_lines, css_block, after = header_end - 1)
+    paste(qmd_lines, collapse = "\n")
+}
+
+
+.find_package_qmd_css <- function() {
+    css_file <- system.file("style", "qmd.css", package = "agrillm")
+    if (nzchar(css_file) && file.exists(css_file)) {
+        return(css_file)
+    }
+
+    dev_css_file <- file.path("inst", "style", "qmd.css")
+    if (file.exists(dev_css_file)) {
+        return(dev_css_file)
+    }
+
+    ""
 }
 
 
@@ -74,24 +131,20 @@ generate_decision_qmd <- function(
 #' This function constructs a detailed prompt for the AI model, providing the decision context, available data, and recipe catalogue. It then calls the language model to generate the QMD content based on the provided information.
 #' 
 #' @param apsimx_file Character scalar path to the APSIMX file used in the analysis.
-#' @param decisions List of resolved decision objects containing the decision context.
 #' @param qmd_doc Character scalar containing the QMD document template.
 #' @param use_cache Logical scalar indicating whether to use cached AI responses if available.
 #' @return Character scalar containing the generated QMD content.
 .generate_decision_qmd_with_ai <- function(
     apsimx_file,
-    decisions,
     qmd_doc,
     use_cache = TRUE
 ) {
-    stopifnot(is.list(decisions))
     stopifnot(is.character(apsimx_file), length(apsimx_file) == 1, file.exists(apsimx_file))
     stopifnot(is.logical(use_cache), length(use_cache) == 1)
     stopifnot(is.character(qmd_doc), length(qmd_doc) >= 1)
     
     qmd_doc <- paste(qmd_doc, collapse = "\n")
 
-    decision_str <- .format_list_for_ai(decisions)
     prompt <- glue::glue("
 You are assisting with the generation of a Quarto (.qmd) decision report.
 
@@ -124,6 +177,7 @@ TASK:
 - Each paragraph must be based ONLY on the visible content in the same section
 - Do NOT use information outside that section
 - Each replacement must be independent
+- wrap AI-generated text into html tab div with class 'ai-text' for styling purposes (e.g. <div class='ai-text'>...</div>)
 
 STYLE:
 - Use clear, concise language

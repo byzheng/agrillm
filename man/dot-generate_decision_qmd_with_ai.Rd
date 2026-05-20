@@ -4,17 +4,10 @@
 \alias{.generate_decision_qmd_with_ai}
 \title{Internal function to generate QMD content using AI}
 \usage{
-.generate_decision_qmd_with_ai(
-  apsimx_file,
-  decisions,
-  qmd_doc,
-  use_cache = TRUE
-)
+.generate_decision_qmd_with_ai(apsimx_file, qmd_doc, use_cache = TRUE)
 }
 \arguments{
 \item{apsimx_file}{Character scalar path to the APSIMX file used in the analysis.}
-
-\item{decisions}{List of resolved decision objects containing the decision context.}
 
 \item{qmd_doc}{Character scalar containing the QMD document template.}
 
