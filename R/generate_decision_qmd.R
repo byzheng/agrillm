@@ -34,7 +34,7 @@ generate_decision_qmd <- function(
             source = apsimx_file,
             report = "HarvestReport",
             title = "Cultivar Suitability Report",
-            author = "Bangyou Zheng",
+            author = "AgriLLM",
             date = Sys.Date(),
             notes = c("This is a cultivar suitability report generated using APSIM NG and AI.")
         ),
