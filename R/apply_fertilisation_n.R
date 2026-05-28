@@ -2,7 +2,7 @@
 #'
 #' Updates the `[Factors].Permutation.Fertilisation` factor in an APSIM Next
 #' Generation model. If a measured fertilisation amount is supplied, that value
-#' is used directly. Otherwise the default scenario sequence `0, 40, ..., 280`
+#' is used directly. Otherwise the default scenario sequence `0, 40, ..., 440` is applied. The function stores the resulting schedule under
 #' is retained. Applied evidence is stored under
 #' `attr(x, "agrillm")$fertilisation_n`.
 #'
@@ -26,7 +26,7 @@
 apply_fertilisation_n <- function(apsimx, fertilisation_n) {
     stopifnot(inherits(apsimx, "list"))
     stopifnot(is.list(fertilisation_n))
-    amount <- seq(0, 300, by = 40)
+    amount <- seq(0, 440, by = 40)
     if (!is.null(fertilisation_n$value) && !is.na(fertilisation_n$value) && fertilisation_n$value != "unknown") {
         amount_value <- as.numeric(fertilisation_n$value)
         if (!is.na(amount_value)) {

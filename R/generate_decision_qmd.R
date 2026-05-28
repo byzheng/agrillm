@@ -8,6 +8,7 @@
 #' @param decisions List of resolved decision objects containing the decision context, including crop, location
 #' metadata, soil conditions, and other relevant information that should be included in the report.
 #' @param qmd_file Character scalar path where the generated QMD file will be saved. The function will write the generated content to this file.
+#' @param decision_type Character scalar indicating the type of decision to generate the report for. Options are "cultivar", "sowing", or "nitrogen". This will guide the content and structure of the generated report.
 #' @param use_ai Logical scalar indicating whether to use AI for generating the QMD content
 #' (typically `TRUE`). If `FALSE`, the function will not generate content and will currently throw an error, as non-AI generation is not implemented yet.
 #' @param use_cache Logical scalar indicating whether to use cached AI responses if available. This can speed up generation if the same prompt has been used before.
@@ -17,6 +18,7 @@ generate_decision_qmd <- function(
     apsimx_file,
     decisions,
     qmd_file,
+    decision_type = c("cultivar", "sowing", "nitrogen"),
     use_ai = TRUE,
     use_cache = TRUE
 ) {
@@ -25,18 +27,29 @@ generate_decision_qmd <- function(
     stopifnot(is.character(apsimx_file), length(apsimx_file) == 1, file.exists(apsimx_file))
     stopifnot(is.logical(use_ai), length(use_ai) == 1)
     stopifnot(is.logical(use_cache), length(use_cache) == 1)
+    decision_type <- match.arg(decision_type)
     
     if (!use_ai) {
         stop("Non-AI generation not implemented yet. Please set use_ai = TRUE.")
     }
+    report_title <- switch(decision_type,
+        cultivar = "Cultivar Suitability Report",
+        sowing = "Sowing Date Report",
+        nitrogen = "Nitrogen Management Report"
+    )
+    report_notes <- switch(decision_type,
+        cultivar = c("This is a cultivar suitability report generated using APSIM NG and AI."),
+        sowing = c("This is a sowing date report generated using APSIM NG and AI."),
+        nitrogen = c("This is a nitrogen management report generated using APSIM NG and AI.")
+    )
     context <- list(
         meta = list(
             source = apsimx_file,
             report = "HarvestReport",
-            title = "Cultivar Suitability Report",
+            title = report_title,
             author = "AgriLLM",
             date = Sys.Date(),
-            notes = c("This is a cultivar suitability report generated using APSIM NG and AI.")
+            notes = report_notes
         ),
         vars = list(
             cultivar_col = "Cultivar",
@@ -60,7 +73,7 @@ generate_decision_qmd <- function(
         years = context$vars$years
     )
 
-    qmd_doc <- rapsimng.decide::document(apsim_output, "cultivar", context, criteria, options, simplify = TRUE)
+    qmd_doc <- rapsimng.decide::document(apsim_output, decision_type, context, criteria, options, simplify = TRUE)
 
     reply <- .generate_decision_qmd_with_ai(
         apsimx_file,

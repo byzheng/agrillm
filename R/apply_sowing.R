@@ -30,6 +30,15 @@ apply_sowing <- function(apsimx, sowing) {
     .str_date <- function(x) {
         as.Date(paste(x, "-2011", sep = ""), format = "%d-%b-%Y")
     }
+    evidence <- list()
+    if (is.null(sowing$start) || length(sowing$start) == 0) {
+        sowing$start <- "01-apr"
+        evidence$start <- "Assumed default sowing start date of 1st April based on regional practices and historical data."
+    }
+    if (is.null(sowing$end) || length(sowing$end) == 0) {
+        sowing$end <- "30-jun"
+        evidence$end <- "Assumed default sowing end date of 30th June based on regional practices and historical data."
+    }
     start_date <- .str_date(sowing$start)
     end_date <- .str_date(sowing$end)    
     sowing_dates <- seq.Date(start_date, end_date, by = "3 day")
@@ -40,10 +49,7 @@ apply_sowing <- function(apsimx, sowing) {
 
     node_sowing$node$Specification <- gsub("^(.*)=.*$", paste0("\\1=", sowing_dates), node_sowing$node$Specification)
     apsimx <- rapsimng::replace_model(apsimx, node_sowing$path, node_sowing$node)
-    sowing$evidence <- list(
-        sowing_dates = sowing_dates,
-        assumptions = "Assumed sowing dates based on provided start and end dates. Daily sowing dates generated for further analysis."
-    )
+    sowing$evidence <- evidence
     apsimx <- .add_attribute(apsimx, "sowing", sowing)
     return(apsimx)
 }

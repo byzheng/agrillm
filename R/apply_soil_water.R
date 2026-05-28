@@ -32,7 +32,7 @@ apply_soil_water <- function(apsimx, soil_water) {
         soil_water = NULL,
         assumptions = NULL
     )
-    if (!is.null(soil_water$pawc_mm)) {
+    if (!is.null(soil_water$pawc_mm) && length(soil_water$pawc_mm) == 1 && is.numeric(soil_water$pawc_mm)) {
         stop("TODO: impleent PAWC to soil profile")
     }
     frac <- 1
