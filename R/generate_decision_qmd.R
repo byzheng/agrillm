@@ -52,6 +52,7 @@ generate_decision_qmd <- function(
             notes = report_notes
         ),
         vars = list(
+            fertilisation_col = "Fertilisation",
             cultivar_col = "Cultivar",
             year_col = "Year",
             sowing_col = "SowingDate",
