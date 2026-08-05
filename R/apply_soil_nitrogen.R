@@ -42,7 +42,7 @@ apply_soil_nitrogen <- function(apsimx, soil_nitrogen) {
             physical_node <- rapsimng::search_path(apsimx, "[Soil].Physical")
             stopifnot(length(physical_node) == 2)
             thickness <- physical_node$node$Thickness |> unlist() |> as.numeric()
-            n_dis <- agrillm::distribute_soil_n(amount, thickness)
+            n_dis <- distribute_soil_n(amount, thickness)
             nitrogen_node <- rapsimng::search_path(apsimx, "[Soil].NO3")
             nitrogen_node$node$Thickness <- thickness
             nitrogen_node$node$InitialValues <- n_dis

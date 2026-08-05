@@ -8,7 +8,8 @@ Description: Provides tools and utilities for applying Large Language Models (LL
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/byzheng/agrillm
+URL: https://agrillm.bangyou.me/,
+    https://github.com/byzheng/agrillm
 BugReports: https://github.com/byzheng/agrillm/issues
 Depends: R (>= 4.1.0)
 Imports:
