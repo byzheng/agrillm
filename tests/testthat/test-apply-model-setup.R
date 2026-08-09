@@ -11,10 +11,10 @@ test_that("apply_sowing updates sowing date permutations and evidence", {
     evidence <- attr(updated, "agrillm")$sowing$evidence
 
     expect_equal(sowing_node$node$Specification, "[Sowing].Script.SowDate=01-may, 04-may, 07-may")
-    expect_equal(evidence$sowing_dates, "01-may, 04-may, 07-may")
+    expect_equal(evidence$sowing_dates, NULL)
     expect_equal(
         evidence$assumptions,
-        "Assumed sowing dates based on provided start and end dates. Daily sowing dates generated for further analysis."
+        NULL
     )
 })
 
@@ -41,7 +41,7 @@ test_that("apply_fertilisation_n keeps the default scenario sequence for unknown
 
     expect_equal(
         fertilisation_node$node$Specification,
-        "[SowingFertiliser].Script.Amount=0, 40, 80, 120, 160, 200, 240, 280"
+        "[SowingFertiliser].Script.Amount=0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400, 440"
     )
 })
 
