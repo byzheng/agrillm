@@ -18,7 +18,7 @@ A modified APSIM model object with updated fertilisation scenarios.
 \description{
 Updates the \verb{[Factors].Permutation.Fertilisation} factor in an APSIM Next
 Generation model. If a measured fertilisation amount is supplied, that value
-is used directly. Otherwise the default scenario sequence \verb{0, 40, ..., 280}
+is used directly. Otherwise the default scenario sequence \verb{0, 40, ..., 440} is applied. The function stores the resulting schedule under
 is retained. Applied evidence is stored under
 \code{attr(x, "agrillm")$fertilisation_n}.
 }

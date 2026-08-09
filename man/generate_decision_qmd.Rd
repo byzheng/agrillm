@@ -8,6 +8,7 @@ generate_decision_qmd(
   apsimx_file,
   decisions,
   qmd_file,
+  decision_type = c("cultivar", "sowing", "nitrogen"),
   use_ai = TRUE,
   use_cache = TRUE
 )
@@ -19,6 +20,8 @@ generate_decision_qmd(
 metadata, soil conditions, and other relevant information that should be included in the report.}
 
 \item{qmd_file}{Character scalar path where the generated QMD file will be saved. The function will write the generated content to this file.}
+
+\item{decision_type}{Character scalar indicating the type of decision to generate the report for. Options are "cultivar", "sowing", or "nitrogen". This will guide the content and structure of the generated report.}
 
 \item{use_ai}{Logical scalar indicating whether to use AI for generating the QMD content
 (typically \code{TRUE}). If \code{FALSE}, the function will not generate content and will currently throw an error, as non-AI generation is not implemented yet.}

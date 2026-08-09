@@ -25,9 +25,9 @@ Imports:
     quarto
 Remotes: 
     byzheng/rapsimng,
-    irudnyts/openai
+    byzheng/rapsimng.decide
 Suggests: 
     testthat (>= 3.0.0),
     ggplot2,
     dplyr
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0
