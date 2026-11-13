@@ -13,7 +13,25 @@
 #' (typically `TRUE`). If `FALSE`, the function will not generate content and will currently throw an error, as non-AI generation is not implemented yet.
 #' @param use_cache Logical scalar indicating whether to use cached AI responses if available. This can speed up generation if the same prompt has been used before.
 #' @return Character scalar path to the written output QMD file.
-#' @export 
+#' 
+#' @examples
+#' \dontrun{
+#' # Generate a cultivar suitability report
+#' decisions <- list(
+#'   crop = list(crop = "wheat"),
+#'   location = list(latitude = -35.1, longitude = 147.4),
+#'   soil_nitrogen = list(value = 50)
+#' )
+#' 
+#' qmd_path <- generate_decision_qmd(
+#'   apsimx_file = "path/to/wheat.apsimx",
+#'   decisions = decisions,
+#'   qmd_file = tempfile(fileext = ".qmd"),
+#'   decision_type = "cultivar",
+#'   use_ai = TRUE
+#' )
+#' }
+#' @export
 generate_decision_qmd <- function(
     apsimx_file,
     decisions,

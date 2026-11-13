@@ -9,7 +9,19 @@
 #' `persist_cache = TRUE`. Default: `.cache_agrillm.rds` in the current working
 #' directory.
 #' @param ... Additional arguments passed to the backend chat function.
-#' @return The response from the LLM backend.
+#' @return The response from the LLM backend (typically a tidyllm response object).
+#' 
+#' @examples
+#' \dontrun{
+#' # Send a prompt to the configured LLM (Azure OpenAI by default)
+#' response <- llm_chat("What are the advantages of early sowing?")
+#' 
+#' # Use caching for repeated queries
+#' response <- llm_chat("Explain nitrogen management", use_cache = TRUE)
+#' 
+#' # Extract the text reply
+#' reply_text <- tidyllm::get_reply(response)
+#' }
 #' @export
 llm_chat <- function(prompt, use_cache = FALSE, persist_cache = TRUE, cache_path = NULL, ...) {
     stopifnot(is.character(prompt), length(prompt) == 1)

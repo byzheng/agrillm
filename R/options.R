@@ -55,10 +55,13 @@ llm_validator <- function(value) {
 #'
 #' @section Methods:
 #' \describe{
-#'   \item{get(key)}{Retrieve the value of an option by its key (e.g., "crops")}
-#'   \item{set(key, value)}{Set the value of an option by its key}
-#'   \item{reset()}{Reset all options to their default values}
+#'   \item{get(key)}{Retrieve the value of an option by its key (e.g., "crops"). Returns the option value.}
+#'   \item{set(key, value)}{Set the value of an option by its key. Returns the options manager invisibly.}
+#'   \item{reset()}{Reset all options to their default values. Returns the options manager invisibly.}
 #' }
+#'
+#' @return An options manager object created by `optree::create_options_manager()` with methods 
+#'   `get()`, `set()`, and `reset()` for managing agrillm configuration parameters.
 #'
 #' @export
 #' @importFrom optree create_options_manager

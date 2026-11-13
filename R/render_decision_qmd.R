@@ -7,6 +7,24 @@
 #' "pdf", or "docx". The default is "html". The function will call `quarto::quarto_render()` with the appropriate format based on this argument.
 #' @param ... Additional arguments to pass to `quarto::quarto_render()`,
 #' such as `output_file` to specify the output file name and location, or `execute_params` to control code execution during rendering. These allow for further customization of the rendering process.
+#' 
+#' @return Invisible NULL. The function is called for its side effect of rendering the QMD file.
+#' 
+#' @examples
+#' \dontrun{
+#' # Render a QMD file to HTML (default)
+#' render_decision_qmd("path/to/decision_report.qmd")
+#' 
+#' # Render to PDF format
+#' render_decision_qmd("path/to/decision_report.qmd", output_format = "pdf")
+#' 
+#' # Render to Word with custom output file name
+#' render_decision_qmd(
+#'   "path/to/decision_report.qmd",
+#'   output_format = "docx",
+#'   output_file = "my_report.docx"
+#' )
+#' }
 #' @export
 render_decision_qmd <- function(
     qmd_file,

@@ -10,7 +10,19 @@
 #' @param use_ai Logical. Whether to use AI fallback when no coordinates are provided. Default: TRUE.
 #' @param use_cache Logical. Whether to use caching for AI responses. Default: TRUE.
 #'
-#' @return A list with latitude, longitude, display_name, source, confidence, raw_input, assumptions.
+#' @return A list with latitude (numeric or NULL), longitude (numeric or NULL), display_name (character or NULL), 
+#'   source (resolution method: "provided_coordinates", "ai_resolution", or "unknown"), 
+#'   confidence (confidence level: "high" or "low"), raw_input (original input), and 
+#'   assumptions (any assumptions made during resolution).
+#' 
+#' @examples
+#' \dontrun{
+#' # Resolve location from explicit coordinates
+#' result <- resolve_location(latitude = -35.1, longitude = 147.4, location_input = "Wagga Wagga")
+#' 
+#' # Resolve location from text description using AI
+#' result <- resolve_location("Wagga Wagga, NSW", use_ai = TRUE)
+#' }
 #' @export
 resolve_location <- function(
     location_input = NULL, latitude = NULL, longitude = NULL,
