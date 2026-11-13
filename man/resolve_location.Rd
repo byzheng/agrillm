@@ -24,9 +24,21 @@ resolve_location(
 \item{use_cache}{Logical. Whether to use caching for AI responses. Default: TRUE.}
 }
 \value{
-A list with latitude, longitude, display_name, source, confidence, raw_input, assumptions.
+A list with latitude (numeric or NULL), longitude (numeric or NULL), display_name (character or NULL),
+source (resolution method: "provided_coordinates", "ai_resolution", or "unknown"),
+confidence (confidence level: "high" or "low"), raw_input (original input), and
+assumptions (any assumptions made during resolution).
 }
 \description{
 Resolves a user-provided location to latitude/longitude. Prefer explicit
 coordinates when available; optionally fall back to AI/geocoding rules if needed.
+}
+\examples{
+\dontrun{
+# Resolve location from explicit coordinates
+result <- resolve_location(latitude = -35.1, longitude = 147.4, location_input = "Wagga Wagga")
+
+# Resolve location from text description using AI
+result <- resolve_location("Wagga Wagga, NSW", use_ai = TRUE)
+}
 }

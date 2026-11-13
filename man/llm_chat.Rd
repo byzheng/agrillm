@@ -28,8 +28,20 @@ directory.}
 \item{...}{Additional arguments passed to the backend chat function.}
 }
 \value{
-The response from the LLM backend.
+The response from the LLM backend (typically a tidyllm response object).
 }
 \description{
 Unified LLM chat interface for agrillm
+}
+\examples{
+\dontrun{
+# Send a prompt to the configured LLM (Azure OpenAI by default)
+response <- llm_chat("What are the advantages of early sowing?")
+
+# Use caching for repeated queries
+response <- llm_chat("Explain nitrogen management", use_cache = TRUE)
+
+# Extract the text reply
+reply_text <- tidyllm::get_reply(response)
+}
 }

@@ -24,7 +24,7 @@ resolve_cultivar(
 \item{use_cache}{Logical. Whether to use caching for AI responses.}
 }
 \value{
-A list with fields: cultivar, source, raw_input, assumptions. If not resolvable, cultivar is "unknown".
+A list with fields: cultivar (resolved cultivar name or "unknown"), source (resolution method), raw_input (original input), and assumptions (any assumptions made during resolution).
 }
 \description{
 Resolve cultivar from free-text input
@@ -44,10 +44,12 @@ assumptions = NULL
 )
 }
 \examples{
-# Example with AI backend configured:
 \dontrun{
-resolve_cultivar("PAWC about 100mm, full profile", "wheat")
-resolve_cultivar("profile about half full", "wheat")
-resolve_cultivar("not sure", "wheat")
+# Resolve a cultivar with direct match
+cultivar_db <- data.frame(name = c("scepter", "scout", "gregory"), stringsAsFactors = FALSE)
+result <- resolve_cultivar("scepter", "wheat", cultivar_db, use_ai = FALSE)
+
+# Resolve with AI fallback for unknown cultivar
+result <- resolve_cultivar("some local variety", "wheat", cultivar_db, use_ai = TRUE)
 }
 }

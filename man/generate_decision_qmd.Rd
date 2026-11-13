@@ -37,3 +37,21 @@ This function generates a Quarto (.qmd) report based on the provided decision co
 \details{
 The generated QMD report will be saved to the specified file path. The function ensures that the AI-generated content adheres to strict constraints, relying solely on the provided decision context and summary data without introducing new assumptions or calculations.
 }
+\examples{
+\dontrun{
+# Generate a cultivar suitability report
+decisions <- list(
+  crop = list(crop = "wheat"),
+  location = list(latitude = -35.1, longitude = 147.4),
+  soil_nitrogen = list(value = 50)
+)
+
+qmd_path <- generate_decision_qmd(
+  apsimx_file = "path/to/wheat.apsimx",
+  decisions = decisions,
+  qmd_file = tempfile(fileext = ".qmd"),
+  decision_type = "cultivar",
+  use_ai = TRUE
+)
+}
+}

@@ -6,6 +6,10 @@
 \usage{
 agrillm_options
 }
+\value{
+An options manager object created by \code{optree::create_options_manager()} with methods
+\code{get()}, \code{set()}, and \code{reset()} for managing agrillm configuration parameters.
+}
 \description{
 An options manager for configuring agrillm parameters. This object provides
 methods to get and set all related parameters.
@@ -21,9 +25,9 @@ methods to get and set all related parameters.
 \section{Methods}{
 
 \describe{
-\item{get(key)}{Retrieve the value of an option by its key (e.g., "crops")}
-\item{set(key, value)}{Set the value of an option by its key}
-\item{reset()}{Reset all options to their default values}
+\item{get(key)}{Retrieve the value of an option by its key (e.g., "crops"). Returns the option value.}
+\item{set(key, value)}{Set the value of an option by its key. Returns the options manager invisibly.}
+\item{reset()}{Reset all options to their default values. Returns the options manager invisibly.}
 }
 }
 
