@@ -41,6 +41,26 @@ resolve_decision("What about sowing time choice?")
 
 To use the AI features, make sure your Azure LLM settings are available. The package expects the Azure environment variables `AZURE_OPENAI_API_KEY` and `AZURE_ENDPOINT_URL` to be set.
 
+## Citation
+
+If you use **agrillm** in your research, please cite:
+
+> **Zheng B**, **Kikuchi Y**, **Wang E**, **Verburg K** (2026). A transparent crop model-driven and AI-assisted framework for agricultural decision support. *Climate Smart Agriculture* **3**: 100143. https://doi.org/10.1016/j.csag.2026.100143
+
+**BibTeX:**
+
+```bibtex
+@article{Zheng2026,
+  author = {Zheng, Bangyou and Kikuchi, Yuki and Wang, Enli and Verburg, Kees},
+  title = {A transparent crop model-driven and AI-assisted framework for agricultural decision support},
+  journal = {Climate Smart Agriculture},
+  year = {2026},
+  volume = {3},
+  pages = {100143},
+  doi = {10.1016/j.csag.2026.100143}
+}
+```
+
 ## Getting help
 
 If you find a bug or want to suggest a feature, please open an issue at:
