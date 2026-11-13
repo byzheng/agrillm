@@ -58,6 +58,11 @@ methods to get and set all related parameters.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="va">agrillm_options</span></span></code></pre></div>
     </div>
 
+    <div id="value">
+    <h2>Value</h2>
+    <p>An options manager object created by <code><a href="https://optree.bangyou.me/reference/create_options_manager.html" class="external-link">optree::create_options_manager()</a></code> with methods
+<code><a href="https://rdrr.io/r/base/get.html" class="external-link">get()</a></code>, <code>set()</code>, and <code>reset()</code> for managing agrillm configuration parameters.</p>
+    </div>
     <div id="available-options">
     <h2>Available Options</h2>
 
@@ -75,13 +80,13 @@ methods to get and set all related parameters.</p>
 
 
 <dl><dt>get(key)</dt>
-<dd><p>Retrieve the value of an option by its key (e.g., "crops")</p></dd>
+<dd><p>Retrieve the value of an option by its key (e.g., "crops"). Returns the option value.</p></dd>
 
 <dt>set(key, value)</dt>
-<dd><p>Set the value of an option by its key</p></dd>
+<dd><p>Set the value of an option by its key. Returns the options manager invisibly.</p></dd>
 
 <dt>reset()</dt>
-<dd><p>Reset all options to their default values</p></dd>
+<dd><p>Reset all options to their default values. Returns the options manager invisibly.</p></dd>
 
 
 </dl></div>
@@ -121,7 +126,7 @@ methods to get and set all related parameters.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Bangou Zheng.</p>
+  <p></p><p>Developed by Bangyou Zheng.</p>
 </div>
 
 <div class="pkgdown">

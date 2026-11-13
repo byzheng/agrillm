@@ -102,6 +102,26 @@ metadata, soil conditions, and other relevant information that should be include
     <p>The generated QMD report will be saved to the specified file path. The function ensures that the AI-generated content adheres to strict constraints, relying solely on the provided decision context and summary data without introducing new assumptions or calculations.</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># Generate a cultivar suitability report</span></span></span>
+<span class="r-in"><span><span class="va">decisions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  crop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>crop <span class="op">=</span> <span class="st">"wheat"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>latitude <span class="op">=</span> <span class="op">-</span><span class="fl">35.1</span>, longitude <span class="op">=</span> <span class="fl">147.4</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  soil_nitrogen <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>value <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">qmd_path</span> <span class="op">&lt;-</span> <span class="fu">generate_decision_qmd</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  apsimx_file <span class="op">=</span> <span class="st">"path/to/wheat.apsimx"</span>,</span></span>
+<span class="r-in"><span>  decisions <span class="op">=</span> <span class="va">decisions</span>,</span></span>
+<span class="r-in"><span>  qmd_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".qmd"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  decision_type <span class="op">=</span> <span class="st">"cultivar"</span>,</span></span>
+<span class="r-in"><span>  use_ai <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -110,7 +130,7 @@ metadata, soil conditions, and other relevant information that should be include
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Bangou Zheng.</p>
+  <p></p><p>Developed by Bangyou Zheng.</p>
 </div>
 
 <div class="pkgdown">
