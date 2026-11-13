@@ -30,9 +30,6 @@ Imports:
     rlang,
     glue,
     quarto
-Remotes: 
-    byzheng/rapsimng,
-    byzheng/rapsimng.decide
 Suggests: 
     testthat (>= 3.0.0),
     ggplot2,
