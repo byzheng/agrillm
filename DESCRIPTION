@@ -4,13 +4,20 @@ Version: 0.1.0
 Authors@R: 
     person("Bangyou", "Zheng", email = "bangyou.zheng@csiro.au", role = c("aut", "cre"))
 Description: Provides tools and utilities for applying Large Language Models (LLMs) 
-    to agricultural research and practice. 
+    to agricultural research and practice. The framework integrates crop simulation models 
+    (APSIM NG) with AI-assisted decision support for transparent, interpretable agricultural 
+    decision-making. See Zheng et al. (2026) for the underlying methodology and framework.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 URL: https://agrillm.bangyou.me/,
     https://github.com/byzheng/agrillm
 BugReports: https://github.com/byzheng/agrillm/issues
+References: 
+    Zheng B, Kikuchi Y, Wang E, Verburg K (2026).
+    "A transparent crop model-driven and AI-assisted framework for agricultural decision support."
+    Climate Smart Agriculture, 3, 100143.
+    https://doi.org/10.1016/j.csag.2026.100143
 Depends: R (>= 4.1.0)
 Imports:
     digest,
