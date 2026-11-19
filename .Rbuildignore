@@ -9,6 +9,6 @@ cran-comments.md
 ^\.agrillm$
 docs
 ^dev$
-cran-comments.md
+^cran-comments.md$
 ^tests/testthat/\.agrillm$
 ^CRAN-SUBMISSION$
