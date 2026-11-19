@@ -1,4 +1,3 @@
-# agrillm 0.0.1
+# agrillm 0.1.0
 
 * Initial package development
-* Added package infrastructure and documentation

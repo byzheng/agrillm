@@ -8,3 +8,4 @@
 docs
 *.db
 dev
+cran-comments.md

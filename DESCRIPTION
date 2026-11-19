@@ -3,9 +3,10 @@ Title: Large Language Models for Agricultural Applications
 Version: 0.1.0
 Authors@R: 
     person("Bangyou", "Zheng", email = "bangyou.zheng@csiro.au", role = c("aut", "cre"))
-Description: Provides tools and utilities for applying Large Language Models (LLMs) 
-    to agricultural research and practice. The framework integrates crop simulation models 
-    (APSIM NG) with AI-assisted decision support for transparent, interpretable agricultural 
+Description: Provides tools and utilities for applying Large Language Models 
+    to agricultural research and practice. The framework integrates in the Agricultural 
+    Production Systems sIMulator ('APSIM') Next Generation with Artificial Intelligence assisted decision 
+    support for transparent, interpretable agricultural 
     decision-making. See Zheng et al. (2026) for the underlying methodology and framework.
 License: MIT + file LICENSE
 Encoding: UTF-8
