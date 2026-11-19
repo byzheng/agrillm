@@ -2,7 +2,7 @@ Package: agrillm
 Title: Large Language Models for Agricultural Applications
 Version: 0.1.0
 Authors@R: 
-    person("Bangyou", "Zheng", email = "bangyou.zheng@csiro.au", role = c("aut", "cre"))
+    person("Bangyou", "Zheng", email = "zheng.bangyou@gmail.com", role = c("aut", "cre"))
 Description: Provides tools and utilities for applying Large Language Models 
     to agricultural research and practice. The framework integrates in the Agricultural 
     Production Systems sIMulator ('APSIM') Next Generation with Artificial Intelligence assisted decision 
@@ -16,7 +16,7 @@ URL: https://agrillm.bangyou.me/,
 BugReports: https://github.com/byzheng/agrillm/issues
 References: 
     Zheng B, Kikuchi Y, Wang E, Verburg K (2026).
-    "A transparent crop model-driven and AI-assisted framework for agricultural decision support."
+    A transparent crop model-driven and AI-assisted framework for agricultural decision support.
     Climate Smart Agriculture, 3, 100143.
     https://doi.org/10.1016/j.csag.2026.100143
 Depends: R (>= 4.1.0)
