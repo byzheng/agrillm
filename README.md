@@ -38,7 +38,7 @@ agrillm_options$get("crops")
 resolve_decision("What about sowing time choice?")
 ```
 
-To use the AI features, make sure your Azure LLM settings are available. The package expects the Azure environment variables `AZURE_OPENAI_API_KEY` and `AZURE_ENDPOINT_URL` to be set.
+To use the AI features, make sure your Azure LLM settings are available. The package expects the Azure environment variables `AZURE_OPENAI_API_KEY`, `AZURE_ENDPOINT_URL` and `AZURE_RESOURCE_NAME` to be set.
 
 ## Citation
 
